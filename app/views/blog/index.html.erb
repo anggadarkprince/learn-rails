@@ -1,0 +1,42 @@
+<% content_for :title do %> - Homepage
+<% end %>
+
+<div class="jumbotron">
+  <div class="container">
+    <h1 class="display-4">Hello, reader!</h1>
+    <p>
+      A discussion or informational website published on the World Wide Web consisting of discrete.
+      Others function as more personal online diaries, and others function more as online brand advertising of a
+      particular individual or company.
+    </p>
+    <p><a class="btn btn-primary" href="#">Explore Article »</a></p>
+  </div>
+</div>
+
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-md-8 col-lg-9">
+
+      <%= render partial: 'article', collection: @articles %>
+
+      <nav>
+        <ul class="pagination">
+          <li class="page-item disabled">
+            <a class="page-link" href="#" tabindex="-1">Previous</a>
+          </li>
+          <li class="page-item"><a class="page-link" href="#">1</a></li>
+          <li class="page-item active">
+            <a class="page-link" href="#">2 <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="page-item"><a class="page-link" href="#">3</a></li>
+          <li class="page-item">
+            <a class="page-link" href="#">Next</a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+    <div class="col-lg-3 d-md-block" hidden>
+      <%= render 'sidebar' %>
+    </div>
+  </div>
+</div>

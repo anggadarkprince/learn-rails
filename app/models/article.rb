@@ -2,6 +2,9 @@ class Article < ApplicationRecord
   self.table_name = 'articles'
   self.primary_key = 'id'
 
+  belongs_to :user
+  belongs_to :category
+
   has_many :comments, dependent: :destroy
   has_many :article_tags, dependent: :destroy
   has_many :tags, through: :article_tags

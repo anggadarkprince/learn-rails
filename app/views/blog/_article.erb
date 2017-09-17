@@ -1,0 +1,16 @@
+<div class="mb-5">
+  <h3><a href="post.html"><%= article.title %></a></h3>
+  <ul class="list-inline">
+    <li class="list-inline-item"><%= article.created_at %></li>
+    <li class="list-inline-item">
+      By <a href="#"><%= article.user.name %></a>
+    </li>
+    <li class="list-inline-item">
+      54 Comments
+    </li>
+  </ul>
+  <div>
+    <%= article.content %>
+  </div>
+  <a href="#" class="mt-2">READ MORE</a>
+</div>
