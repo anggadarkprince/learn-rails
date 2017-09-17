@@ -7,8 +7,8 @@ class AddDetailsToArticles < ActiveRecord::Migration[5.1]
       t.string :featured, limit: 300, after: :content
       t.string :status, limit: 300, default: 'published', after: :content, null: false
       t.integer :views, default: 0, after: :featured
-      t.references :category, foreign_key: true, after: :views
-      t.references :user, foreign_key: true, after: :views
+      t.references :category, foreign_key: true, after: :views, on_delete: :cascade
+      t.references :user, foreign_key: true, after: :views, on_delete: :cascade
     end
 
     def up

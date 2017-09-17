@@ -12,6 +12,14 @@
 
 ActiveRecord::Schema.define(version: 20170917025700) do
 
+  create_table "article_tags", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.bigint "article_id", null: false
+    t.bigint "tag_id", null: false
+    t.datetime "created_at"
+    t.index ["article_id"], name: "fk_rails_646e8d3122"
+    t.index ["tag_id"], name: "fk_rails_b651172c61"
+  end
+
   create_table "articles", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "slug", limit: 500, null: false
     t.string "title", null: false
@@ -26,14 +34,6 @@ ActiveRecord::Schema.define(version: 20170917025700) do
     t.index ["category_id"], name: "index_articles_on_category_id"
     t.index ["slug"], name: "index_articles_on_slug"
     t.index ["user_id"], name: "index_articles_on_user_id"
-  end
-
-  create_table "articles_tags", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.bigint "article_id", null: false
-    t.bigint "tag_id", null: false
-    t.datetime "created_at"
-    t.index ["article_id"], name: "fk_rails_74380b8667"
-    t.index ["tag_id"], name: "fk_rails_d3e30c5d45"
   end
 
   create_table "categories", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -73,10 +73,10 @@ ActiveRecord::Schema.define(version: 20170917025700) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "article_tags", "articles", on_delete: :cascade
+  add_foreign_key "article_tags", "tags", on_delete: :cascade
   add_foreign_key "articles", "categories"
   add_foreign_key "articles", "users"
-  add_foreign_key "articles_tags", "articles"
-  add_foreign_key "articles_tags", "tags"
   add_foreign_key "categories", "categories"
   add_foreign_key "comments", "articles"
 end
