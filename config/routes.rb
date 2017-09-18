@@ -2,6 +2,10 @@ Rails.application.routes.draw do
   get 'blog/index'
   root 'blog#index'
 
+  get '/agreement', to: 'static#agreement', as: 'static_agreement'
+  get '/privacy', to: 'static#privacy', as: 'static_privacy'
+
+  get '/search', to: 'blog#search', as: 'blog_search'
   get '/article/:slug', to: 'blog#show', as: 'blog_show', slug: /[^\/]+/
   get '/category/:id', to: 'blog#category', as: 'blog_category'
   get '/tag/:id', to: 'blog#tag', as: 'blog_tag'

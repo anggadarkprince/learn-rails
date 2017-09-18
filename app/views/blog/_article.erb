@@ -12,7 +12,7 @@
     </li>
   </ul>
   <div class="mb-3">
-    <%= article.content %>
+    <%= truncate(strip_tags(article.content), length: 300, separator: ' ') %>
   </div>
   <a href="#">READ MORE</a>
 </div>

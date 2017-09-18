@@ -23,4 +23,10 @@ class BlogController < ApplicationController
   def archive
     @articles = Article.all
   end
+
+  def search
+    query = params[:q]
+    @query = query;
+    @articles = Article.where('title LIKE :query', query: "%#{query}%").all
+  end
 end
