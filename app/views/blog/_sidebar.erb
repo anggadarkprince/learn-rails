@@ -12,13 +12,13 @@
     <div class="mb-5">
       <h4>Categories</h4>
       <ul class="list-unstyled">
-        <li><a href="#">Computer (20)</a></li>
-        <li><a href="#">Relationship (12)</a></li>
-        <li><a href="#">Movies (3)</a></li>
-        <li><a href="#">Food (42)</a></li>
-        <li><a href="#">Sport (23)</a></li>
-        <li><a href="#">Life (84)</a></li>
-        <li><a href="#">Work (2)</a></li>
+        <% @categoriesMenu.each do |category| %>
+          <li>
+            <a href="/category/<%= category.id %>">
+              <%= category.category %> (<%= category.articles.count %>)
+            </a>
+          </li>
+        <% end %>
       </ul>
     </div>
   </div>

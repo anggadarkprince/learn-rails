@@ -7,19 +7,20 @@ class BlogController < ApplicationController
 
   def show
     articleSlug = params[:slug]
-    @books = Article.find_by('slug', articleSlug)
+    @article = Article.find_by_slug(articleSlug)
   end
 
   def category
     categoryId = params[:id]
-    @books = Article.find_by('category_id', categoryId)
+    @category = Category.find(categoryId);
+    @articles = @category.articles
   end
 
   def tag
-    @books = Article.all
+    @articles = Article.all
   end
 
   def archive
-    @books = Article.all
+    @articles = Article.all
   end
 end

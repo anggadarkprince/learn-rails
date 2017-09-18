@@ -1,0 +1,46 @@
+<% content_for :title do %> - Homepage
+<% end %>
+
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-lg-9">
+
+      <div class="pr-xl-4">
+        <ol class="breadcrumb pl-0 bg-transparent">
+          <li class="breadcrumb-item"><a href="/">Articles</a></li>
+          <li class="breadcrumb-item">
+            <a href="/category/<%= @article.category.id %>">
+              <%= @article.category.category %>
+            </a>
+          </li>
+          <li class="breadcrumb-item active"><%= @article.title %></li>
+        </ol>
+
+        <h3><%= @article.title %></h3>
+        <ul class="list-inline">
+          <li class="list-inline-item">
+            <%= @article.created_at.strftime('%B %d, %Y %I:%M %p') %>
+          </li>
+          <li class="list-inline-item">
+            Posted By <a href="/author/<%= @article.user.username %>"><%= @article.user.name %></a>
+          </li>
+          <li class="list-inline-item">
+            <%= @article.comments.count %> Comments
+          </li>
+        </ul>
+        <div>
+          <%= raw @article.content %>
+        </div>
+
+        <h4 class="mb-4 mt-5">Comments</h4>
+        <div class="mb-5">
+          <%= render @article.comments %>
+        </div>
+      </div>
+
+    </div>
+    <div class="col-lg-3 d-md-block" hidden>
+      <%= render 'sidebar' %>
+    </div>
+  </div>
+</div>

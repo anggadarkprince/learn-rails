@@ -103,9 +103,17 @@ Article.destroy_all
                      }
                  ])
   articles.each do |article|
-    total = Random.rand(1..10)
-    total.times do |counter|
+    totalTags = Random.rand(1..10)
+    totalTags.times do |counter|
       article.article_tags.create(tag_id: Random.rand(1..24))
+    end
+
+    totalComments = Random.rand(1..10)
+    totalComments.times do |counter|
+      article.comments.create(
+          commenter: Faker::Name.name,
+          body: Faker::Lorem.sentence(3)
+      )
     end
   end
 end
