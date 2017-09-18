@@ -9,7 +9,7 @@
         <ol class="breadcrumb pl-0 bg-transparent">
           <li class="breadcrumb-item"><a href="/">Articles</a></li>
           <li class="breadcrumb-item">
-            <a href="/category/<%= @article.category.id %>">
+            <a href="/category/<%= @article.category.slug %>">
               <%= @article.category.category %>
             </a>
           </li>
@@ -30,6 +30,12 @@
         </ul>
         <div>
           <%= raw @article.content %>
+        </div>
+
+        <div class="lead mb-5">
+          <% @article.tags.each do |tag| %>
+              <a href="/tag/<%= tag.slug %>" class="badge badge-pill badge-primary">#<%= tag.tag %></a>
+          <% end %>
         </div>
 
         <h4 class="mb-4 mt-5">Comments</h4>

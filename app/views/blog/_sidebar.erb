@@ -14,7 +14,7 @@
       <ul class="list-unstyled">
         <% @categoriesMenu.each do |category| %>
           <li>
-            <a href="/category/<%= category.id %>">
+            <a href="/category/<%= category.slug %>">
               <%= category.category %> (<%= category.articles.count %>)
             </a>
           </li>
@@ -26,11 +26,13 @@
     <div class="mb-5">
       <h4>Archive</h4>
       <ul class="list-unstyled">
-        <li><a href="#">September 2017</a></li>
-        <li><a href="#">August 2017</a></li>
-        <li><a href="#">July 2017</a></li>
-        <li><a href="#">June 2017</a></li>
-        <li><a href="#">May 2017</a></li>
+        <% @archivesMenu.each do |archive| %>
+            <li>
+              <a href="/archive/<%= archive.year %>/<%= archive.month %>">
+                <%= archive.month_name %> <%= archive.year %>
+              </a>
+            </li>
+        <% end %>
       </ul>
     </div>
   </div>

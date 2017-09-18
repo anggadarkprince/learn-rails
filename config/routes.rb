@@ -7,8 +7,8 @@ Rails.application.routes.draw do
 
   get '/search', to: 'blog#search', as: 'blog_search'
   get '/article/:slug', to: 'blog#show', as: 'blog_show', slug: /[^\/]+/
-  get '/category/:id', to: 'blog#category', as: 'blog_category'
-  get '/tag/:id', to: 'blog#tag', as: 'blog_tag'
+  get '/category/:slug', to: 'blog#category', as: 'blog_category'
+  get '/tag/:slug', to: 'blog#tag', as: 'blog_tag'
   get '/archive/:year/:month', to: 'blog#archive', as: 'blog_archive'
 
   resources :articles do

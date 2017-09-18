@@ -37,7 +37,7 @@
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarBrowse">
             <% @categoriesMenu.each do |category| %>
-                <a class="dropdown-item" href="/category/<%= category.id %>">
+                <a class="dropdown-item" href="/category/<%= category.slug %>">
                   <%= category.category %>
                 </a>
             <% end %>
