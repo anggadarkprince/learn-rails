@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170917025700) do
+ActiveRecord::Schema.define(version: 20170918141016) do
 
   create_table "article_tags", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.bigint "article_id", null: false
@@ -37,6 +37,7 @@ ActiveRecord::Schema.define(version: 20170917025700) do
   end
 
   create_table "categories", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "slug", null: false
     t.string "category", limit: 50, null: false
     t.string "description", limit: 500, null: false
     t.string "featured", limit: 300
@@ -44,21 +45,31 @@ ActiveRecord::Schema.define(version: 20170917025700) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["category_id"], name: "index_categories_on_category_id"
+    t.index ["slug"], name: "index_categories_on_slug"
   end
 
   create_table "comments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.string "commenter"
-    t.text "body"
+    t.string "name", null: false
+    t.string "email", limit: 50
+    t.text "comment", null: false
+    t.string "status", limit: 100, default: "approved", null: false
+    t.integer "votes", default: 0, null: false
+    t.bigint "comment_id"
+    t.bigint "user_id"
     t.bigint "article_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["article_id"], name: "index_comments_on_article_id"
+    t.index ["comment_id"], name: "index_comments_on_comment_id"
+    t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
   create_table "tags", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "slug", null: false
     t.string "tag", limit: 50, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["slug"], name: "index_tags_on_slug"
   end
 
   create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -79,4 +90,6 @@ ActiveRecord::Schema.define(version: 20170917025700) do
   add_foreign_key "articles", "users"
   add_foreign_key "categories", "categories"
   add_foreign_key "comments", "articles"
+  add_foreign_key "comments", "comments"
+  add_foreign_key "comments", "users"
 end

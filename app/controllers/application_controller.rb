@@ -6,4 +6,8 @@ class ApplicationController < ActionController::Base
     @categoriesMenu = Category.all
   end
 
+  def get_archive_list
+    @archiveMenu = Article.all
+  end
+
 end

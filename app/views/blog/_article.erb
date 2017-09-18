@@ -8,7 +8,7 @@
       By <a href="/author/<%= article.user.username %>"><%= article.user.name %></a>
     </li>
     <li class="list-inline-item">
-      <%= article.comments.count %> Comments
+      <%= article.comments.where('comment_id IS NULL').count %> Comments
     </li>
   </ul>
   <div class="mb-3">
