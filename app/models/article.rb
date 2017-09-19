@@ -1,6 +1,7 @@
 class Article < ApplicationRecord
   self.table_name = 'articles'
   self.primary_key = 'id'
+  paginates_per 10
 
   belongs_to :user
   belongs_to :category

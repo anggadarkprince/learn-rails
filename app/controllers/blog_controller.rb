@@ -12,7 +12,7 @@ class BlogController < ApplicationController
   end
 
   def index
-    @articles = Article.order(created_at: :desc).all
+    @articles = Article.order(created_at: :desc).page params[:page]
   end
 
   def show
@@ -23,24 +23,24 @@ class BlogController < ApplicationController
   def category
     categorySlug = params[:slug]
     @category = Category.find_by_slug!(categorySlug)
-    @articles = @category.articles.order(created_at: :desc).all
+    @articles = @category.articles.order(created_at: :desc).page params[:page]
   end
 
   def tag
     tagSlug = params[:slug]
     @tag = Tag.find_by_slug!(tagSlug)
-    @articles = @tag.articles.order(created_at: :desc).all
+    @articles = @tag.articles.order(created_at: :desc).page params[:page]
   end
 
   def archive
     @year = params[:year]
     @month = params[:month]
-    @articles = Article.where('YEAR(created_at) = :year AND DATE_FORMAT(created_at, "%m") = :month', year: "#{@year}", month: "#{@month}")
+    @articles = Article.where('YEAR(created_at) = :year AND DATE_FORMAT(created_at, "%m") = :month', year: "#{@year}", month: "#{@month}").page params[:page]
   end
 
   def search
     query = params[:q]
     @query = query;
-    @articles = Article.where('title LIKE :query', query: "%#{query}%").all
+    @articles = Article.where('title LIKE :query', query: "%#{query}%").page params[:page]
   end
 end

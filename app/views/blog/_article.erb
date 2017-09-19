@@ -14,5 +14,5 @@
   <div class="mb-3">
     <%= truncate(strip_tags(article.content), length: 300, separator: ' ') %>
   </div>
-  <a href="#">READ MORE</a>
+  <a href="/article/<%= article.slug %>">READ MORE</a>
 </div>
