@@ -1,6 +1,6 @@
 <div class="mb-5">
   <h4>Search</h4>
-  <form action="/search" class="mt-3">
+  <form action="/<%= I18n.default_locale %>/search" class="mt-3">
     <div class="form-group">
       <input type="search" name="q" id="q" value="<%= params[:q] %>" class="form-control" placeholder="Search article...">
     </div>
@@ -14,7 +14,7 @@
       <ul class="list-unstyled">
         <% @categoriesMenu.each do |category| %>
           <li>
-            <a href="/category/<%= category.slug %>">
+            <a href="<%= url_for(controller: 'blog', action: 'category', only_path: false, slug: category.slug) %>">
               <%= category.category %> (<%= category.articles.count %>)
             </a>
           </li>
@@ -28,7 +28,7 @@
       <ul class="list-unstyled">
         <% @archivesMenu.each do |archive| %>
             <li>
-              <a href="/archive/<%= archive.year %>/<%= archive.month %>">
+              <a href="<%= url_for(controller: 'blog', action: 'archive', only_path: false, year: archive.year, month: archive.month) %>">
                 <%= archive.month_name %> <%= archive.year %>
               </a>
             </li>

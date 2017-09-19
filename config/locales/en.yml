@@ -30,4 +30,5 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  hello: "Hello, reader!"
+  description: "A discussion or informational website published on the World Wide Web consisting of discrete. Others function as more personal online diaries, and others function more as online brand advertising of a particular individual or company."

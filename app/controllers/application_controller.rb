@@ -1,6 +1,14 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
-  before_action :get_category_list, :get_archive_list
+  before_action :get_category_list, :get_archive_list, :set_locale
+
+  def set_locale
+    I18n.locale = params[:locale] || I18n.default_locale
+  end
+
+  def default_url_options
+    { locale: I18n.locale }
+  end
 
   def get_category_list
     @categoriesMenu = Category.all

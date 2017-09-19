@@ -33,4 +33,5 @@ class BlogController < ApplicationController
     @query = query;
     @articles = Article.where('title LIKE :query', query: "%#{query}%").page params[:page]
   end
+  
 end
