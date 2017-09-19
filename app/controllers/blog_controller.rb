@@ -1,15 +1,5 @@
 class BlogController < ApplicationController
   layout 'application'
-  before_action :get_category_list, :get_archive_list
-
-  def get_category_list
-    @categoriesMenu = Category.all
-  end
-
-  def get_archive_list
-    @archivesMenu = Article.select('YEAR(created_at) AS year, DATE_FORMAT(created_at, "%m") AS month, DATE_FORMAT(created_at, "%M") AS month_name')
-                        .group('year, month, month_name')
-  end
 
   def index
     @articles = Article.order(created_at: :desc).page params[:page]
