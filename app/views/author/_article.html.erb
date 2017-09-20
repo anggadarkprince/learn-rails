@@ -1,0 +1,24 @@
+<div class="card mb-4">
+  <img class="card-img-top" style="height: 180px; width: 100%; display: block; background: url('/assets/features/<%= article.featured %>') center center / cover">
+  <div class="card-body">
+    <h4 class="card-title">
+      <a href="<%= url_for(controller: 'blog', action: 'show', slug: article.slug) %>">
+        <%= article.title %>
+      </a>
+    </h4>
+    <p class="card-subtitle mb-3">
+      Published on <%= article.created_at.strftime('%B %d, %Y') %> in
+      <a href="<%= url_for(controller: 'blog', action: 'category', slug: article.category.slug) %>">
+        <%= article.category.category %>
+      </a>
+      with <%= article.views %> views
+    </p>
+    <p class="card-text">
+      <%= truncate(strip_tags(article.content), length: 300, separator: ' ') %>
+    </p>
+
+    <a href="#" class="card-link" data-toggle="modal" data-target="#dialog-share">Share</a>
+    <%= link_to 'Edit Article', edit_article_path(article), class: 'card-link' %>
+    <a href="#" class="card-link" data-toggle="modal" data-target="#dialog-delete">Remove</a>
+  </div>
+</div>

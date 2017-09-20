@@ -15,7 +15,7 @@ Rails.application.routes.draw do
     get '/trending', to: 'blog#trending', as: 'blog_trending'
 
     get '/top_authors', to: 'author#top', as: 'top_authors'
-    get '/author/:username', to: 'author#profile', as: 'profile'
+    get '/author/:username', to: 'author#profile', as: 'profile', username: /[^\/]+/
 
     get '/contact', to: 'contact#form', as: 'contact'
     post '/contact/create', to: 'contact#create', as: 'contact_create'

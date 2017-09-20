@@ -21,6 +21,8 @@
 /yarn-error.log
 
 config/application.yml
+app/assets/images/avatars
+app/assets/images/features
 
 .byebug_history
 .idea
