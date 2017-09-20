@@ -38,8 +38,31 @@
           <% end %>
         </div>
 
+        <h4 class="mb-4 mt-5">Author</h4>
+        <div class="card">
+          <div class="card-body">
+            <div class="d-block d-sm-flex text-center text-sm-left">
+              <img class="mr-sm-3 mb-3 mb-sm-0" style="width: 90px; height: 90px;"
+                   src="/assets/avatars/<%= @article.user.avatar %>"
+                   data-holder-rendered="true">
+              <div>
+                <p class="lead mb-3 mb-md-1">
+                  <strong><%= @article.user.name %></strong>
+                  <small class="text-muted">@<%= @article.user.username %></small>
+                </p>
+                <p class="d-md-block" hidden>
+                  <%= @article.user.about %>
+                </p>
+                <a class="btn btn-primary" href="<%= url_for(controller: 'author', action: 'profile', username: @article.user.username) %>" role="button">View Profile</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <h4 class="mb-4 mt-5">Comments</h4>
-        <div class="mb-5">
+        <%= render 'comments/form' %>
+
+        <div class="mb-5 mt-5">
           <%= render @article.comments.where('comment_id IS NULL').order(created_at: :desc) %>
         </div>
       </div>

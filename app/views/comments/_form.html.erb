@@ -1,13 +1,32 @@
-<%= form_for([@article, @article.comments.build]) do |f| %>
-    <p>
-      <%= f.label :commenter %><br>
-      <%= f.text_field :commenter %>
-    </p>
-    <p>
-      <%= f.label :body %><br>
-      <%= f.text_area :body %>
-    </p>
-    <p>
-      <%= f.submit %>
-    </p>
-<% end %>
+<div class="row">
+  <div class="col-lg-8">
+
+    <% if flash[:notice] %>
+        <div class="alert alert-primary" role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <%= flash[:notice] %>
+        </div>
+    <% end %>
+
+    <%= form_for([@article, @article.comments.build]) do |f| %>
+        <div class="form-group">
+          <%= f.label :name %>
+          <%= f.text_field :name, class: 'form-control', placeholder: 'Your full name' %>
+        </div>
+        <div class="form-group">
+          <%= f.label :email %>
+          <%= f.email_field :email, class: 'form-control', placeholder: 'Email address' %>
+        </div>
+        <div class="form-group">
+          <%= f.label :comment %>
+          <%= f.text_area :comment, class: 'form-control', placeholder: 'Comment put here' %>
+        </div>
+        <div class="form-group">
+          <%= submit_tag('Submit', {class: 'btn btn-primary'}) %>
+        </div>
+    <% end %>
+
+  </div>
+</div>
