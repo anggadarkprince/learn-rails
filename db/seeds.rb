@@ -149,3 +149,16 @@ Article.destroy_all
   end
 end
 p "Created #{Article.count} articles"
+
+Contact.destroy_all
+10.times do |index|
+  Contact.create([
+                  {
+                      name: Faker::Name.name,
+                      email: Faker::Internet.email,
+                      subject: Faker::Lorem.sentence(3),
+                      about: Faker::Lorem.paragraph,
+                  }
+              ]);
+end
+p "Created #{Contact.count} contact"

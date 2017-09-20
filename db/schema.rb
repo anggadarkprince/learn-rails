@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170918141016) do
+ActiveRecord::Schema.define(version: 20170920125647) do
 
   create_table "article_tags", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.bigint "article_id", null: false
@@ -62,6 +62,15 @@ ActiveRecord::Schema.define(version: 20170918141016) do
     t.index ["article_id"], name: "index_comments_on_article_id"
     t.index ["comment_id"], name: "index_comments_on_comment_id"
     t.index ["user_id"], name: "index_comments_on_user_id"
+  end
+
+  create_table "contacts", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "name", limit: 50, null: false
+    t.string "email", limit: 50, null: false
+    t.string "subject", limit: 100, null: false
+    t.text "message", limit: 255, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "tags", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|

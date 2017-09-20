@@ -18,6 +18,7 @@ Rails.application.routes.draw do
     get '/author/:username', to: 'author#profile', as: 'profile'
 
     get '/contact', to: 'contact#form', as: 'contact'
+    post '/contact/create', to: 'contact#create', as: 'contact_create'
 
     resources :articles do
       resources :comments
