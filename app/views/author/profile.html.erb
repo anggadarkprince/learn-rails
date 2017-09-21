@@ -27,21 +27,25 @@
 
       <div class="row mb-4">
         <div class="col-6 mt-2">
-          <h4>Articles</h4>
+          <h4><%= t(:menu_articles) %></h4>
         </div>
         <div class="col-6 text-right">
           <div class="dropdown">
             <button class="btn btn-outline-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <% if(params[:order_by] == 'popularity') %>
-                  Popularity
+                  <%= t(:sort_popularity) %>
                 <% else %>
-                  Latest Date
+                  <%= t(:sort_latest) %>
                 <% end %>
             </button>
             <div class="dropdown-menu dropdown-menu-right">
               <h6 class="dropdown-header">Method</h6>
-              <a class="dropdown-item" href="<%= url_for(controller: 'author', action: 'profile', username: @author.username, order_by: 'latest') %>">Latest Date</a>
-              <a class="dropdown-item" href="<%= url_for(controller: 'author', action: 'profile', username: @author.username, order_by: 'popularity') %>">Popularity</a>
+              <a class="dropdown-item" href="<%= url_for(controller: 'author', action: 'profile', username: @author.username, order_by: 'latest') %>">
+                <%= t(:sort_latest) %>
+              </a>
+              <a class="dropdown-item" href="<%= url_for(controller: 'author', action: 'profile', username: @author.username, order_by: 'popularity') %>">
+                <%= t(:sort_popularity) %>
+              </a>
             </div>
           </div>
         </div>

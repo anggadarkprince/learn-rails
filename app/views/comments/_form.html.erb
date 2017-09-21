@@ -12,15 +12,15 @@
 
     <%= form_for([@article, @article.comments.build]) do |f| %>
         <div class="form-group">
-          <%= f.label :name %>
+          <%= f.label :name, t(:label_name) %>
           <%= f.text_field :name, class: 'form-control', placeholder: 'Your full name' %>
         </div>
         <div class="form-group">
-          <%= f.label :email %>
+          <%= f.label :email, t(:label_email) %>
           <%= f.email_field :email, class: 'form-control', placeholder: 'Email address' %>
         </div>
         <div class="form-group">
-          <%= f.label :comment %>
+          <%= f.label :comment, t(:label_comments) %>
           <%= f.text_area :comment, class: 'form-control', placeholder: 'Comment put here' %>
         </div>
         <div class="form-group">

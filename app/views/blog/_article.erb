@@ -10,20 +10,22 @@
       <%= article.created_at.strftime('%B %d, %Y') %>
     </li>
     <li class="list-inline-item">
-      By
+      <%= t(:label_by) %>
       <a href="<%= url_for(controller: 'author', action: 'profile', username: article.user.username) %>">
         <%= article.user.name %>
       </a>
     </li>
     <li class="list-inline-item">
-      <%= article.comments.where('comment_id IS NULL').count %> Comments
+      <%= article.comments.where('comment_id IS NULL').count %> <%= t(:label_comments) %>
     </li>
     <li class="list-inline-item">
-      <%= article.views %> Views
+      <%= article.views %> <%= t(:label_views) %>
     </li>
   </ul>
   <div class="mb-3">
     <%= truncate(strip_tags(article.content), length: 300, separator: ' ') %>
   </div>
-  <a href="<%= url_for(controller: 'blog', action: 'show', slug: article.slug) %>">READ MORE</a>
+  <a href="<%= url_for(controller: 'blog', action: 'show', slug: article.slug) %>" class="text-uppercase">
+    <%= t(:label_read_more) %>
+  </a>
 </div>

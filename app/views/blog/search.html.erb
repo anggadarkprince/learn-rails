@@ -11,11 +11,13 @@
 <div class="container mt-5">
   <div class="row">
     <div class="col-md-8 col-lg-9">
+      <div class="pr-xl-4">
 
-      <%= render partial: 'article', collection: @articles %>
+        <%= render partial: 'article', collection: @articles %>
 
-      <%= paginate @articles %>
+        <%= paginate @articles %>
 
+      </div>
     </div>
     <div class="col-lg-3 d-md-block" hidden>
       <%= render 'sidebar' %>

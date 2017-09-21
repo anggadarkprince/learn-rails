@@ -22,18 +22,18 @@
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav">
         <li class="nav-item <%= params[:controller] == 'blog' && params[:action] == 'index' ? 'active' : '' %>">
-          <a class="nav-link" href="<%= root_url %>">Home <span class="sr-only">(current)</span></a>
+          <a class="nav-link" href="<%= root_url %>"><%= t(:menu_home) %></a>
         </li>
-        <li class="nav-item <%= params[:controller] == 'trending' %>">
-          <a class="nav-link" href="<%= url_for(controller: 'blog', action: 'trending') %>">Trending</a>
+        <li class="nav-item <%= params[:controller] == 'blog' && params[:action] == 'trending' ? 'active' : '' %>">
+          <a class="nav-link" href="<%= url_for(controller: 'blog', action: 'trending') %>"><%= t(:menu_trending) %></a>
         </li>
         <li class="nav-item <%= params[:controller] == 'author' %>">
-          <a class="nav-link" href="<%= url_for(controller: 'author', action: 'top') %>">Top Contributors</a>
+          <a class="nav-link" href="<%= url_for(controller: 'author', action: 'top') %>"><%= t(:menu_top_contributors) %></a>
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarBrowse" data-toggle="dropdown"
              aria-haspopup="true" aria-expanded="false">
-            Categories
+            <%= t(:menu_categories) %>
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarBrowse">
             <% @categoriesMenu.each do |category| %>
@@ -53,10 +53,10 @@
           </a>
           <div class="dropdown-menu dropdown-menu-right">
             <h6 class="dropdown-header">Main Menu</h6>
-            <a class="dropdown-item" href="articles.html">Articles</a>
-            <a class="dropdown-item" href="settings.html">Settings</a>
+            <a class="dropdown-item" href="articles.html"><%= t(:menu_articles) %></a>
+            <a class="dropdown-item" href="settings.html"><%= t(:menu_settings) %></a>
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="index.html">Sign Out</a>
+            <a class="dropdown-item" href="index.html"><%= t(:menu_sign_out) %></a>
           </div>
         </li>
       </ul>
@@ -77,22 +77,23 @@
         <% locales = %w(en id).map {|l| l.prepend '/'} %>
         <% baseUrl = request.protocol+request.host_with_port %>
         <% queryString = request.fullpath.sub(Regexp.union(locales), '') %>
-        <li class="list-inline-item">Language:</li>
+        <li class="list-inline-item"><%= t(:label_language) %>:</li>
         <li class="list-inline-item"><%= link_to('English', "#{baseUrl}/en#{queryString}") %></li>
         <li class="list-inline-item mr-4"><%= link_to('Indonesia', "#{baseUrl}/id#{queryString}") %></li>
 
         <li class="list-inline-item">
           <a href="<%= url_for(controller: 'static', action: 'agreement') %>">
-            Agreement</a>
+            <%= t(:menu_agreement) %>
+          </a>
         </li>
         <li class="list-inline-item">
           <a href="<%= url_for(controller: 'static', action: 'privacy') %>">
-            Privacy
+            <%= t(:menu_privacy) %>
           </a>
         </li>
         <li class="list-inline-item">
           <a href="<%= url_for(controller: 'contact', action: 'form') %>">
-            Contact Us
+            <%= t(:menu_contact_us) %>
           </a>
         </li>
       </ul>

@@ -6,19 +6,31 @@
         <%= article.title %>
       </a>
     </h4>
-    <p class="card-subtitle mb-3">
-      Published on <%= article.created_at.strftime('%B %d, %Y') %> in
-      <a href="<%= url_for(controller: 'blog', action: 'category', slug: article.category.slug) %>">
-        <%= article.category.category %>
-      </a>
-      with <%= article.views %> views
-    </p>
+    <ul class="list-inline list-node text-muted">
+      <li class="list-inline-item">
+        <%= t(:label_published_on) %> <%= article.created_at.strftime('%B %d, %Y') %>
+      </li>
+      <li class="list-inline-item">
+        <%= t(:menu_categories) %>
+        <a href="<%= url_for(controller: 'blog', action: 'category', slug: article.category.slug) %>">
+          <%= article.category.category %>
+        </a>
+      </li>
+      <li class="list-inline-item">
+        <%= article.views %>x <%= t(:label_views) %>
+      </li>
+    </ul>
+
     <p class="card-text">
       <%= truncate(strip_tags(article.content), length: 300, separator: ' ') %>
     </p>
 
-    <a href="#" class="card-link" data-toggle="modal" data-target="#dialog-share">Share</a>
-    <%= link_to 'Edit Article', edit_article_path(article), class: 'card-link' %>
-    <a href="#" class="card-link" data-toggle="modal" data-target="#dialog-delete">Remove</a>
+    <a href="#" class="card-link" data-toggle="modal" data-target="#dialog-share">
+      <%= t(:action_share) %>
+    </a>
+    <%= link_to t(:action_edit), edit_article_path(article), class: 'card-link' %>
+    <a href="#" class="card-link" data-toggle="modal" data-target="#dialog-delete">
+      <%= t(:action_delete) %>
+    </a>
   </div>
 </div>

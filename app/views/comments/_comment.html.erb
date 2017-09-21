@@ -34,10 +34,10 @@
         <a href="#"><span class="arrow arrow-down"></span></a>
       </li>
       <li class="list-inline-item">
-        <%= link_to 'Reply', [comment.article, comment] %>
+        <%= link_to t(:action_reply), [comment.article, comment] %>
       </li>
       <li class="list-inline-item">
-        <%= link_to 'Delete', [comment.article, comment],
+        <%= link_to t(:action_delete), [comment.article, comment],
                     method: :delete,
                     data: { confirm: 'Are you sure?' } %>
       </li>

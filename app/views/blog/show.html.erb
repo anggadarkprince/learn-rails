@@ -7,7 +7,7 @@
 
       <div class="pr-xl-4">
         <ol class="breadcrumb pl-0 bg-transparent">
-          <li class="breadcrumb-item"><a href="/">Articles</a></li>
+          <li class="breadcrumb-item"><a href="/"><%= t(:menu_articles) %></a></li>
           <li class="breadcrumb-item">
             <a href="/category/<%= @article.category.slug %>">
               <%= @article.category.category %>
@@ -24,13 +24,16 @@
             <%= @article.created_at.strftime('%B %d, %Y %I:%M %p') %>
           </li>
           <li class="list-inline-item">
-            Posted By <a href="/author/<%= @article.user.username %>"><%= @article.user.name %></a>
+            <%= t(:label_posted_by) %>
+            <a href="/author/<%= @article.user.username %>">
+              <%= @article.user.name %>
+            </a>
           </li>
           <li class="list-inline-item">
-            <%= @article.comments.where('comment_id IS NULL').count %> Comments
+            <%= @article.comments.where('comment_id IS NULL').count %> <%= t(:label_comments) %>
           </li>
           <li class="list-inline-item">
-            <%= @article.views %> Views
+            <%= @article.views %>x <%= t(:label_views) %>
           </li>
         </ul>
         <div>
@@ -43,7 +46,7 @@
           <% end %>
         </div>
 
-        <h4 class="mb-4 mt-5">Author</h4>
+        <h4 class="mb-4 mt-5"><%= t(:label_author) %></h4>
         <div class="card">
           <div class="card-body">
             <div class="d-block d-sm-flex text-center text-sm-left">
@@ -58,13 +61,14 @@
                 <p class="d-md-block" hidden>
                   <%= @article.user.about %>
                 </p>
-                <a class="btn btn-primary" href="<%= url_for(controller: 'author', action: 'profile', username: @article.user.username) %>" role="button">View Profile</a>
+                <a class="btn btn-primary" href="<%= url_for(controller: 'author', action: 'profile', username: @article.user.username) %>" role="button">View
+                  Profile</a>
               </div>
             </div>
           </div>
         </div>
 
-        <h4 class="mb-4 mt-5" id="comment">Comments</h4>
+        <h4 class="mb-4 mt-5" id="comment"><%= t(:label_comments) %></h4>
         <%= render 'comments/form' %>
 
         <div class="mb-5 mt-5">
