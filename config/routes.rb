@@ -4,6 +4,12 @@ Rails.application.routes.draw do
   scope '(:locale)', locale: /en|id/ do
     root 'blog#index'
 
+    get '/register', to: 'auth#register_form', as: 'register_form'
+    post '/register', to: 'auth#register', as: 'register'
+
+    get '/login', to: 'auth#login_form', as: 'login_form'
+    post '/login', to: 'auth#login', as: 'login'
+
     get '/agreement', to: 'static#agreement', as: 'static_agreement'
     get '/privacy', to: 'static#privacy', as: 'static_privacy'
 

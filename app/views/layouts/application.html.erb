@@ -46,6 +46,16 @@
         </li>
       </ul>
       <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="<%= url_for(controller: 'auth', action: 'login') %>">
+            Sign In
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="<%= url_for(controller: 'auth', action: 'register') %>">
+            Register
+          </a>
+        </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true"
              aria-expanded="false">
@@ -66,7 +76,7 @@
 
 <%= yield %>
 
-<div class="container">
+<div class="container<%= yield :footer_fixed %>">
   <hr>
   <footer class="row">
     <div class="col-md-6 text-center text-sm-left">
