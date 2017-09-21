@@ -4,7 +4,7 @@ class CommentsController < ApplicationController
   def create
     @article = Article.find(params[:article_id])
     @comment = @article.comments.create(comment_params)
-    redirect_to blog_show_path(slug: @article.slug), notice: 'Your comment was successfully submitted.'
+    redirect_to blog_show_path(slug: @article.slug) + '#comment', notice: 'Your comment was successfully submitted.'
   end
 
   def destroy

@@ -1,5 +1,5 @@
 <div class="card mb-4">
-  <img class="card-img-top" style="height: 180px; width: 100%; display: block; background: url('/assets/features/<%= article.featured %>') center center / cover">
+  <img class="card-img-top" style="height: 180px; width: 100%; display: block; background: url('<%= asset_path('features/'+article.featured) %>') center center / cover">
   <div class="card-body">
     <h4 class="card-title">
       <a href="<%= url_for(controller: 'blog', action: 'show', slug: article.slug) %>">
