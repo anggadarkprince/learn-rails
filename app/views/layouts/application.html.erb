@@ -46,35 +46,38 @@
         </li>
       </ul>
       <ul class="navbar-nav ml-auto">
-        <li class="nav-item">
-          <a class="nav-link" href="<%= url_for(controller: 'auth', action: 'login') %>">
-            Sign In
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="<%= url_for(controller: 'auth', action: 'register') %>">
-            Register
-          </a>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true"
-             aria-expanded="false">
-            Angga Ari Wijaya
-          </a>
-          <div class="dropdown-menu dropdown-menu-right">
-            <h6 class="dropdown-header">Main Menu</h6>
-            <a class="dropdown-item" href="<%= articles_path %>">
-              <%= t(:menu_articles) %>
-            </a>
-            <a class="dropdown-item" href="<%= settings_path %>">
-              <%= t(:menu_settings) %>
-            </a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="<%= logout_path %>">
-              <%= t(:menu_sign_out) %>
-            </a>
-          </div>
-        </li>
+        <% if session[:authorized_id].nil? %>
+            <li class="nav-item">
+              <a class="nav-link" href="<%= url_for(controller: 'auth', action: 'login') %>">
+                Sign In
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="<%= url_for(controller: 'auth', action: 'register') %>">
+                Register
+              </a>
+            </li>
+        <% else %>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true"
+                 aria-expanded="false">
+                <%= @loggedUser.name %>
+              </a>
+              <div class="dropdown-menu dropdown-menu-right">
+                <h6 class="dropdown-header">Main Menu</h6>
+                <a class="dropdown-item <%= params[:controller] == 'articles' ? 'active' : '' %>" href="<%= articles_path %>">
+                  <%= t(:menu_articles) %>
+                </a>
+                <a class="dropdown-item <%= params[:controller] == 'account' ? 'active' : '' %>" href="<%= settings_path %>">
+                  <%= t(:menu_settings) %>
+                </a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="<%= logout_path %>">
+                  <%= t(:menu_sign_out) %>
+                </a>
+              </div>
+            </li>
+        <% end %>
       </ul>
     </div>
   </div>

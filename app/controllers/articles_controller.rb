@@ -1,8 +1,33 @@
 class ArticlesController < ApplicationController
-  http_basic_authenticate_with name: "angga", password: "secret", except: [:index, :show]
+  http_basic_authenticate_with name: 'angga', password: 'secret', except: [:index, :show]
+
+  def is_authorized
+    if session.has_key?('authorized_id')
+      @author = User.find(session.fetch(:authorized_id, '0'))
+      if @author.nil?
+        session.destroy
+        redirect_to login_path
+        false
+      else
+        true
+      end
+    else
+      redirect_to login_path
+      false
+    end
+  end
 
   def index
-    @articles = Article.all
+    if is_authorized
+      articleData = @author.articles
+      if params[:order_by] == 'popularity'
+        articleData = articleData.order(views: :desc)
+      else
+        articleData = articleData.order(created_at: :desc)
+      end
+      @articles = articleData.page params[:page]
+      render 'author/profile'
+    end
   end
 
   def show

@@ -1,8 +1,12 @@
 class AuthController < ApplicationController
 
   def login_form
-    @user = User.new
-    render 'auth/login'
+    if session.has_key?('authorized_id')
+      redirect_to articles_path
+    else
+      @user = User.new
+      render 'auth/login'
+    end
   end
 
   def login
@@ -35,8 +39,12 @@ class AuthController < ApplicationController
   end
 
   def register_form
-    @user = User.new
-    render 'auth/register'
+    if session.has_key?('authorized_id')
+      redirect_to articles_path
+    else
+      @user = User.new
+      render 'auth/register'
+    end
   end
 
   def register

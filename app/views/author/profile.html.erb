@@ -13,9 +13,13 @@
           <strong><%= @author.name %>!</strong>
         </h3>
         <p class="d-md-block" hidden>
-          <%= @author.about %>
+          <%= @author.about.nil? ? 'No story available' : @author.about %>
         </p>
-        <a class="btn btn-primary" href="<%= url_for(controller: 'articles', action: 'new') %>" role="button">Create New Post</a>
+        <% if !session[:authorized_id].nil? && @author.id == session[:authorized_id]  %>
+            <a class="btn btn-primary" href="<%= new_article_path %>" role="button">
+              Create New Post
+            </a>
+        <% end %>
       </div>
     </div>
   </div>
@@ -32,18 +36,27 @@
         <div class="col-6 text-right">
           <div class="dropdown">
             <button class="btn btn-outline-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <% if(params[:order_by] == 'popularity') %>
+              <% if (params[:order_by] == 'popularity') %>
                   <%= t(:sort_popularity) %>
-                <% else %>
+              <% else %>
                   <%= t(:sort_latest) %>
-                <% end %>
+              <% end %>
             </button>
             <div class="dropdown-menu dropdown-menu-right">
               <h6 class="dropdown-header">Method</h6>
-              <a class="dropdown-item" href="<%= url_for(controller: 'author', action: 'profile', username: @author.username, order_by: 'latest') %>">
+              <%
+                if !session[:authorized_id].nil? && @author.id == session[:authorized_id] && params[:controller] == 'articles'
+                  sort_latest = articles_path order_by: 'latest'
+                  sort_popularity = articles_path order_by: 'popularity'
+                else
+                  sort_latest = profile_path username: @author.username, order_by: 'latest'
+                  sort_popularity = profile_path username: @author.username, order_by: 'popularity'
+                end
+              %>
+              <a class="dropdown-item" href="<%= sort_latest %>">
                 <%= t(:sort_latest) %>
               </a>
-              <a class="dropdown-item" href="<%= url_for(controller: 'author', action: 'profile', username: @author.username, order_by: 'popularity') %>">
+              <a class="dropdown-item" href="<%= sort_popularity %>">
                 <%= t(:sort_popularity) %>
               </a>
             </div>
@@ -51,7 +64,7 @@
         </div>
       </div>
 
-      <%= render partial: 'article', collection: @articles %>
+      <%= render partial: 'author/article', collection: @articles %>
 
       <%= paginate @articles %>
 

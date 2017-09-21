@@ -1,6 +1,12 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
-  before_action :get_category_list, :get_archive_list, :set_locale
+  before_action :get_category_list, :get_archive_list, :set_locale, :check_logged_user
+
+  def check_logged_user
+    if session.has_key?('authorized_id')
+      @loggedUser = User.find(session.fetch(:authorized_id, '0'))
+    end
+  end
 
   def set_locale
     I18n.locale = params[:locale] || I18n.default_locale

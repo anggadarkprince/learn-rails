@@ -25,12 +25,16 @@
       <%= truncate(strip_tags(article.content), length: 300, separator: ' ') %>
     </p>
 
-    <a href="#" class="card-link" data-toggle="modal" data-target="#dialog-share">
-      <%= t(:action_share) %>
-    </a>
-    <%= link_to t(:action_edit), edit_article_path(article), class: 'card-link' %>
-    <a href="#" class="card-link" data-toggle="modal" data-target="#dialog-delete">
-      <%= t(:action_delete) %>
-    </a>
+    <% if !session[:authorized_id].nil? && article.user_id == session[:authorized_id]  %>
+        <a href="#" class="card-link" data-toggle="modal" data-target="#dialog-share">
+          <%= t(:action_share) %>
+        </a>
+        <a href="<%= edit_article_path(article) %>" class="card-link">
+          <%= t(:action_edit) %>
+        </a>
+        <a href="#" class="card-link" data-toggle="modal" data-target="#dialog-delete">
+          <%= t(:action_delete) %>
+        </a>
+    <% end %>
   </div>
 </div>
