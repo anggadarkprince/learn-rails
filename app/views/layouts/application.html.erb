@@ -63,10 +63,16 @@
           </a>
           <div class="dropdown-menu dropdown-menu-right">
             <h6 class="dropdown-header">Main Menu</h6>
-            <a class="dropdown-item" href="articles.html"><%= t(:menu_articles) %></a>
-            <a class="dropdown-item" href="settings.html"><%= t(:menu_settings) %></a>
+            <a class="dropdown-item" href="<%= articles_path %>">
+              <%= t(:menu_articles) %>
+            </a>
+            <a class="dropdown-item" href="<%= settings_path %>">
+              <%= t(:menu_settings) %>
+            </a>
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="index.html"><%= t(:menu_sign_out) %></a>
+            <a class="dropdown-item" href="<%= logout_path %>">
+              <%= t(:menu_sign_out) %>
+            </a>
           </div>
         </li>
       </ul>

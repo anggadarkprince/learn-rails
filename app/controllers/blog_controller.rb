@@ -33,7 +33,7 @@ class BlogController < ApplicationController
   def trending
     @articles = Article.where(created_at: (Time.now.midnight - 1.month)..Time.now.midnight)
                     .order(views: :desc)
-                    .take(10)
+                    .page params[:page]
   end
 
   def search

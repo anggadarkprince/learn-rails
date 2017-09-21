@@ -1,24 +1,11 @@
 <% content_for :title do %> - Articles of this month
 <% end %>
 
-<div class="jumbotron">
-  <div class="container">
+<% content_for :banner_content do %>
     <h1 class="display-5">Articles of this month</h1>
     <p>
       Most viewed article in last 30 days.
     </p>
-  </div>
-</div>
+<% end %>
 
-<div class="container mt-5">
-  <div class="row">
-    <div class="col-md-8 col-lg-9">
-      <div class="pr-xl-4">
-        <%= render partial: 'article', collection: @articles %>
-      </div>
-    </div>
-    <div class="col-lg-3 d-md-block" hidden>
-      <%= render 'sidebar' %>
-    </div>
-  </div>
-</div>
+<%= render template: 'layouts/base' %>

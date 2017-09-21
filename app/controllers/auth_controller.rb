@@ -9,19 +9,29 @@ class AuthController < ApplicationController
     username = params[:user][:username]
     password = params[:user][:password]
     @user = User.find_by_username(username)
-    if (!@user.nil?)
+    if !@user.nil?
       if (@user.password == password)
-        redirect_to root_path
+        session[:authorized_id] = @user.id
+        session[:authorized_username] = @user.username
+        session[:authorized_role] = @user.role
+        redirect_to articles_path
       else
         @user = User.new(username: username)
         @user.errors.add(:password, 'Your password is wrong')
+        flash.now[:alert] = 'warning'
+        flash.now[:notice] = 'Login attempting failed'
         render 'auth/login'
       end
     else
-      @user = User.new(username: username)
-      @user.errors.add(:username, 'User account is not found')
-      render 'auth/login'
+      flash[:alert] = 'danger'
+      flash[:notice] = 'User account is not found.'
+      redirect_to action: :login_form
     end
+  end
+
+  def logout
+    session.destroy
+    redirect_to root_path
   end
 
   def register_form

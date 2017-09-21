@@ -1,26 +1,9 @@
 <% content_for :title do %> - Result of <%= @query %>
 <% end %>
 
-<div class="jumbotron">
-  <div class="container">
+<% content_for :banner_content do %>
     <h1 class="display-5 mb-0">Search: "<%= @query %>"</h1>
     <p class="mb-0">Found <%= @articles.total_count %> articles</p>
-  </div>
-</div>
+<% end %>
 
-<div class="container mt-5">
-  <div class="row">
-    <div class="col-md-8 col-lg-9">
-      <div class="pr-xl-4">
-
-        <%= render partial: 'article', collection: @articles %>
-
-        <%= paginate @articles %>
-
-      </div>
-    </div>
-    <div class="col-lg-3 d-md-block" hidden>
-      <%= render 'sidebar' %>
-    </div>
-  </div>
-</div>
+<%= render template: 'layouts/base' %>

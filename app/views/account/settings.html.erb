@@ -1,0 +1,85 @@
+<% content_for :title do %> - Settings
+<% end %>
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-lg-8 ml-lg-auto mr-lg-auto">
+      <div class="mb-4">
+        <h4>Settings</h4>
+        <p class="text-muted">Configure your account information</p>
+
+        <form action="src/subscription.php" method="post" class="mb-5">
+          <div class="row">
+            <div class="col-12 col-sm-6">
+              <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" class="form-control" id="name" name="name" placeholder="Your full name">
+                <small id="name-help" class="form-text text-muted">
+                  Your complete name.
+                </small>
+              </div>
+            </div>
+            <div class="col-12 col-sm-6">
+              <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" class="form-control" id="username" aria-describedby="username-help"
+                       name="username" placeholder="Enter username">
+                <small id="username-help" class="form-text text-muted">
+                  Must be unique, alpha numeric and dash only.
+                </small>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col col-sm-6">
+              <div class="form-group">
+                <label for="email">Email address</label>
+                <input type="email" class="form-control" id="email" name="email"
+                       placeholder="Enter email">
+              </div>
+            </div>
+            <div class="col col-sm-6">
+              <div class="form-group">
+                <label for="avatar">Avatar</label>
+                <input type="file" class="form-control-file" id="avatar" name="featured">
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="password">About</label>
+            <textarea class="form-control" id="about" name="about" placeholder="Short story about you"
+                      rows="2"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" class="form-control" id="password" name="password"
+                   placeholder="Your password">
+          </div>
+          <div class="row">
+            <div class="col-12 col-sm-6">
+              <div class="form-group">
+                <label for="new-password">New Password</label>
+                <input type="password" class="form-control" id="new-password" name="new_password"
+                       placeholder="New password">
+                <small id="new-password-help" class="form-text text-muted">
+                  Leave it blank if you don't intend to change the password.
+                </small>
+              </div>
+            </div>
+            <div class="col-12 col-sm-6">
+              <div class="form-group">
+                <label for="confirm-password">Confirm Password</label>
+                <input type="password" class="form-control" id="confirm-password"
+                       name="confirm_password" placeholder="Confirm new password">
+              </div>
+            </div>
+          </div>
+          <div class="form-group mt-4">
+            <button class="btn btn-block btn-primary">Save Changes</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+

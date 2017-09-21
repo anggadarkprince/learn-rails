@@ -1,28 +1,11 @@
 <% content_for :title do %> - <%= @category.category %>
 <% end %>
 
-<div class="jumbotron">
-  <div class="container">
+<% content_for :banner_content do %>
     <h1 class="display-5">Category: <%= @category.category %></h1>
     <p>
       <%= @category.description %>
     </p>
-  </div>
-</div>
+<% end %>
 
-<div class="container mt-5">
-  <div class="row">
-    <div class="col-md-8 col-lg-9">
-      <div class="pr-xl-4">
-
-        <%= render partial: 'article', collection: @articles %>
-
-        <%= paginate @articles %>
-
-      </div>
-    </div>
-    <div class="col-lg-3 d-md-block" hidden>
-      <%= render 'sidebar' %>
-    </div>
-  </div>
-</div>
+<%= render template: 'layouts/base' %>
