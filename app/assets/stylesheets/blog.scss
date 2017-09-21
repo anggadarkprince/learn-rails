@@ -38,3 +38,13 @@ a:hover {
     border-right: 6px solid transparent;
   }
 }
+
+.list-node li+li:before {
+  content: "";
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #999999;
+  display: inline-block;
+  margin: 3px 5px 3px 0;
+}

@@ -19,7 +19,7 @@
         <img class="mb-3" style="height: 230px; width: 100%; display: block; background: url('<%= asset_path('features/'+@article.featured) %>') center center / cover">
 
         <h3><%= @article.title %></h3>
-        <ul class="list-inline">
+        <ul class="list-inline list-node">
           <li class="list-inline-item">
             <%= @article.created_at.strftime('%B %d, %Y %I:%M %p') %>
           </li>
@@ -28,6 +28,9 @@
           </li>
           <li class="list-inline-item">
             <%= @article.comments.where('comment_id IS NULL').count %> Comments
+          </li>
+          <li class="list-inline-item">
+            <%= @article.views %> Views
           </li>
         </ul>
         <div>

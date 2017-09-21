@@ -25,7 +25,15 @@ class BlogController < ApplicationController
   def archive
     @year = params[:year]
     @month = params[:month]
-    @articles = Article.where('YEAR(created_at) = :year AND DATE_FORMAT(created_at, "%m") = :month', year: "#{@year}", month: "#{@month}").page params[:page]
+    @articles = Article.where('YEAR(created_at) = :year', year: "#{@year}")
+                    .where('DATE_FORMAT(created_at, "%m") = :month', month: "#{@month}")
+                    .page params[:page]
+  end
+
+  def trending
+    @articles = Article.where(created_at: (Time.now.midnight - 1.month)..Time.now.midnight)
+                    .order(views: :desc)
+                    .take(10)
   end
 
   def search
@@ -33,5 +41,5 @@ class BlogController < ApplicationController
     @query = query;
     @articles = Article.where('title LIKE :query', query: "%#{query}%").page params[:page]
   end
-  
+
 end
