@@ -14,7 +14,7 @@
       <ul class="list-unstyled">
         <% @categoriesMenu.each do |category| %>
           <li>
-            <a href="<%= url_for(controller: 'blog', action: 'category', only_path: false, slug: category.slug) %>">
+            <a href="<%= url_for(controller: 'blog', action: 'category', slug: category.slug) %>">
               <%= category.category %> (<%= category.articles.count %>)
             </a>
           </li>
@@ -28,8 +28,8 @@
       <ul class="list-unstyled">
         <% @archivesMenu.each do |archive| %>
             <li>
-              <a href="<%= url_for(controller: 'blog', action: 'archive', only_path: false, year: archive.year, month: archive.month) %>">
-                <%= archive.month_name %> <%= archive.year %>
+              <a href="<%= url_for(controller: 'blog', action: 'archive', year: archive.year, month: archive.month) %>">
+                <%= t('date.month_names')[archive.month.to_i-1] %> <%= archive.year %>
               </a>
             </li>
         <% end %>

@@ -58,6 +58,8 @@ en:
   label_posted_by: "Posted by"
   label_by: "By"
   label_published_on: "Published on"
+  label_since: "Since"
+  label_contributors_on_the_week: "Contributors on the week"
 
   action_share: "Share"
   action_reply: "Reply"

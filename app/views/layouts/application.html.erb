@@ -27,10 +27,10 @@
         <li class="nav-item <%= params[:controller] == 'blog' && params[:action] == 'trending' ? 'active' : '' %>">
           <a class="nav-link" href="<%= url_for(controller: 'blog', action: 'trending') %>"><%= t(:menu_trending) %></a>
         </li>
-        <li class="nav-item <%= params[:controller] == 'author' %>">
+        <li class="nav-item <%= params[:controller] == 'author' && params[:action] == 'top' ? 'active' : '' %>">
           <a class="nav-link" href="<%= url_for(controller: 'author', action: 'top') %>"><%= t(:menu_top_contributors) %></a>
         </li>
-        <li class="nav-item dropdown">
+        <li class="nav-item dropdown <%= params[:action] == 'category' ? 'active' : '' %>">
           <a class="nav-link dropdown-toggle" href="#" id="navbarBrowse" data-toggle="dropdown"
              aria-haspopup="true" aria-expanded="false">
             <%= t(:menu_categories) %>
@@ -38,7 +38,7 @@
           <div class="dropdown-menu" aria-labelledby="navbarBrowse">
             <% @categoriesMenu.each do |category| %>
                 <a class="dropdown-item <%= params[:action] == 'category' && params[:slug] == category.slug ? 'active' : '' %>"
-                   href="<%= url_for(controller: 'blog', action: 'category', only_path: false, slug: category.slug) %>">
+                   href="<%= url_for(controller: 'blog', action: 'category', slug: category.slug) %>">
                   <%= category.category %>
                 </a>
             <% end %>

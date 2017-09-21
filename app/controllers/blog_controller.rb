@@ -39,7 +39,9 @@ class BlogController < ApplicationController
   def search
     query = params[:q]
     @query = query;
-    @articles = Article.where('title LIKE :query', query: "%#{query}%").page params[:page]
+    @articles = Article.select('articles.*').joins(:user)
+                    .where('title LIKE :query OR content LIKE :query OR users.name LIKE :query', query: "%#{query}%")
+                    .page params[:page]
   end
 
 end

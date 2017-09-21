@@ -1,0 +1,30 @@
+<% content_for :title do %> - Top Contributors
+<% end %>
+
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-lg-8 ml-lg-auto mr-lg-auto">
+
+      <div class="mb-4 mt-2">
+        <h4><%= t(:label_contributors_on_the_week) %></h4>
+      </div>
+
+      <div class="mb-5">
+        <% @onTheWeekAuthors.each do |author| %>
+            <a title="<%= author.name %>" href="<%= url_for(controller: 'author', action: 'profile', username: author.username) %>">
+              <img alt="<%= author.name %>" class="mr-3 mb-3" style="width: 70px; height: 70px;"
+                   src="/assets/avatars/<%= author.avatar %>"
+                   data-holder-rendered="true">
+            </a>
+        <% end %>
+      </div>
+
+      <div class="mb-4 mt-2">
+        <h4><%= t(:menu_top_contributors) %></h4>
+      </div>
+
+      <%= render partial: 'author', collection: @authors %>
+
+    </div>
+  </div>
+</div>

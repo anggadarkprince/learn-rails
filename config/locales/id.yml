@@ -27,6 +27,8 @@ id:
   label_posted_by: "Diterbitkan oleh"
   label_by: "Oleh"
   label_published_on: "Diterbitkan pada"
+  label_since: "Sejak"
+  label_contributors_on_the_week: "Penulis minggu ini"
 
   action_share: "Bagikan"
   action_reply: "Balas"
@@ -35,3 +37,9 @@ id:
 
   sort_latest: "Terakhir Terbit"
   sort_popularity: "Paling Populer"
+
+  date:
+    month_names: [
+      "Januari", "February", "Maret", "April", "Mei", "Juni",
+      "Juli", "Agustus", "September", "Oktober", "November", "Desember"
+    ]

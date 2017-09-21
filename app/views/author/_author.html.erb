@@ -1,0 +1,26 @@
+<div class="d-block d-sm-flex text-center text-sm-left mb-3">
+  <a href="<%= url_for(controller: 'author', action: 'profile', username: author.username) %>">
+    <img class="mr-sm-4 mb-3" style="width: 90px; height: 90px;"
+       src="/assets/avatars/<%= author.avatar %>"
+       data-holder-rendered="true">
+  </a>
+  <div>
+    <h5 class="mb-1">
+      <a href="<%= url_for(controller: 'author', action: 'profile', username: author.username) %>" role="button">
+        <%= author.name %>
+      </a>
+    </h5>
+    <ul class="list-inline list-node text-muted mb-1">
+      <li class="list-inline-item">
+        Total <%= t(:menu_articles) %> <%= author.articles.count %>
+      </li>
+      <li class="list-inline-item d-sm-inline" hidden>
+        <%= t(:label_since) %> <%= author.created_at.strftime('%B %d, %Y') %>
+      </li>
+    </ul>
+    <p class="d-md-block">
+      <%= author.about %>
+    </p>
+  </div>
+  <hr class="d-sm-none">
+</div>
