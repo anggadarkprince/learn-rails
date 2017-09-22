@@ -7,7 +7,7 @@ class User < ApplicationRecord
   attr_accessor :new_password
   attr_accessor :new_password_confirmation
 
-  def hash_password
+  def verify_password
     @password ||= Password.new(password)
   end
 

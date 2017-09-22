@@ -15,7 +15,7 @@ class AuthController < ApplicationController
     if !@user.nil?
       password = params[:user][:password]
       begin
-        if (@user.hash_password == password)
+        if (@user.verify_password == password)
           session[:is_authorized] = true
           session[:authorized_id] = @user.id
           session[:authorized_username] = @user.username
