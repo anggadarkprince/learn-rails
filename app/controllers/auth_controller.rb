@@ -54,7 +54,7 @@ class AuthController < ApplicationController
     if @user.save
       redirect_to login_form_path, alert: 'success', notice: 'User was successfully registered.'
     else
-      render 'register_form', alert: 'danger', notice: 'Something went wrong.'
+      render 'auth/register', alert: 'danger', notice: 'Something went wrong.'
     end
   end
 

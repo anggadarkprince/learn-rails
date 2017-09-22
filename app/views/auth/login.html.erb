@@ -24,7 +24,7 @@
                 <%= form.label :username %>
                 <%= form.text_field :username, class: "form-control#{@user.errors[:username].any? ? ' is-invalid' : ''}", placeholder: 'Your user ID' %>
                 <% if @user.errors[:username].any? %>
-                    <span class="form-text invalid-feedback d-block"><%= @user.errors[:username][0] %></span>
+                    <span class="form-text invalid-feedback"><%= @user.errors[:username][0] %></span>
                 <% end %>
               </div>
             </div>
@@ -32,7 +32,7 @@
               <%= form.label :password %>
               <%= form.password_field :password, class: "form-control#{@user.errors[:password].any? ? ' is-invalid' : ''}", placeholder: 'Your password' %>
               <% if @user.errors[:password].any? %>
-                  <span class="form-text invalid-feedback d-block"><%= @user.errors[:password][0] %></span>
+                  <span class="form-text invalid-feedback"><%= @user.errors[:password][0] %></span>
               <% end %>
             </div>
           </div>
