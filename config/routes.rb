@@ -10,7 +10,8 @@ Rails.application.routes.draw do
     get '/login', to: 'auth#login_form', as: 'login_form'
     post '/login', to: 'auth#login', as: 'login'
     get '/logout', to: 'auth#logout', as: 'logout'
-    get '/settings', to: 'account#settings', as: 'settings'
+    get '/settings', to: 'account#settings_form', as: 'settings_form'
+    patch '/settings', to: 'account#settings', as: 'settings'
 
     get '/agreement', to: 'static#agreement', as: 'static_agreement'
     get '/privacy', to: 'static#privacy', as: 'static_privacy'

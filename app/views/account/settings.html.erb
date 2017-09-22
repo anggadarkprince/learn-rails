@@ -7,82 +7,110 @@
         <h4>Settings</h4>
         <p class="text-muted">Configure your account information</p>
 
-        <form action="src/subscription.php" method="post" class="mb-5">
-          <div class="row">
-            <div class="col-12 col-sm-6">
-              <div class="form-group">
-                <label for="name">Name</label>
-                <input type="text" class="form-control" id="name" name="name" placeholder="Your full name">
-                <small id="name-help" class="form-text text-muted">
-                  Your complete name.
-                </small>
-              </div>
+        <% if flash[:alert] %>
+            <div class="alert alert-<%= flash[:alert] %>" role="alert">
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+              <%= flash[:notice] %>
             </div>
-            <div class="col-12 col-sm-6">
-              <div class="form-group">
-                <label for="username">Username</label>
-                <input type="text" class="form-control" id="username" aria-describedby="username-help"
-                       name="username" placeholder="Enter username">
-                <small id="username-help" class="form-text text-muted">
-                  Must be unique, alpha numeric and dash only.
-                </small>
-              </div>
-            </div>
-          </div>
+        <% end %>
 
-          <div class="row">
-            <div class="col col-sm-6">
-              <div class="form-group">
-                <label for="email">Email address</label>
-                <input type="email" class="form-control" id="email" name="email"
-                       placeholder="Enter email">
+        <%= form_for @user, url: settings_path, html: {id: 'register'} do |form| %>
+            <div class="row">
+              <div class="col-12 col-sm-6">
+                <div class="form-group">
+                  <%= form.label :name %>
+                  <%= form.text_field :name, class: "form-control#{@user.errors[:name].any? ? ' is-invalid' : ''}", placeholder: 'Your full name' %>
+                  <% if @user.errors[:name].any? %>
+                      <span class="form-text invalid-feedback"><%= @user.errors[:name][0] %></span>
+                  <% else %>
+                      <small class="form-text text-muted">Your complete name.</small>
+                  <% end %>
+                </div>
               </div>
-            </div>
-            <div class="col col-sm-6">
-              <div class="form-group">
-                <label for="avatar">Avatar</label>
-                <div>
-                  <label class="custom-file">
-                    <input type="file" id="avatar" name="avatar" class="custom-file-input">
-                    <span class="custom-file-control"></span>
-                  </label>
+              <div class="col-12 col-sm-6">
+                <div class="form-group">
+                  <%= form.label :username %>
+                  <%= form.text_field :username, class: "form-control#{@user.errors[:username].any? ? ' is-invalid' : ''}", placeholder: 'Unique user ID' %>
+                  <% if @user.errors[:username].any? %>
+                      <span class="form-text invalid-feedback"><%= @user.errors[:name][0] %></span>
+                  <% else %>
+                      <small class="form-text text-muted">Must be unique, alphanumeric, underscore and dash only.
+                      </small>
+                  <% end %>
                 </div>
               </div>
             </div>
-          </div>
-          <div class="form-group">
-            <label for="password">About</label>
-            <textarea class="form-control" id="about" name="about" placeholder="Short story about you"
-                      rows="2"></textarea>
-          </div>
-          <div class="form-group">
-            <label for="password">Password</label>
-            <input type="password" class="form-control" id="password" name="password"
-                   placeholder="Your password">
-          </div>
-          <div class="row">
-            <div class="col-12 col-sm-6">
-              <div class="form-group">
-                <label for="new-password">New Password</label>
-                <input type="password" class="form-control" id="new-password" name="new_password"
-                       placeholder="New password">
-                <small id="new-password-help" class="form-text text-muted">
-                  Leave it blank if you don't intend to change the password.
-                </small>
+            <div class="row">
+              <div class="col col-sm-6">
+                <div class="form-group">
+                  <%= form.label :email, 'Email address' %>
+                  <%= form.email_field :email, class: "form-control#{@user.errors[:email].any? ? ' is-invalid' : ''}", placeholder: 'Email address' %>
+                  <% if @user.errors[:email].any? %>
+                      <span class="form-text invalid-feedback"><%= @user.errors[:email][0] %></span>
+                  <% end %>
+                </div>
+              </div>
+              <div class="col col-sm-6">
+                <div class="form-group">
+                  <%= form.label :avatar %>
+                  <div>
+                    <label class="custom-file">
+                      <%= form.file_field :avatar, class: "custom-file-input#{@user.errors[:email].any? ? ' is-invalid' : ''}" %>
+                      <span class="custom-file-control"></span>
+                    </label>
+                  </div>
+                  <% if @user.errors[:avatar].any? %>
+                      <span class="form-text invalid-feedback"><%= @user.errors[:avatar][0] %></span>
+                  <% end %>
+                </div>
               </div>
             </div>
-            <div class="col-12 col-sm-6">
-              <div class="form-group">
-                <label for="confirm-password">Confirm Password</label>
-                <input type="password" class="form-control" id="confirm-password"
-                       name="confirm_password" placeholder="Confirm new password">
+            <div class="form-group">
+              <%= form.label :about, 'About' %>
+              <%= form.text_area :about, class: "form-control#{@user.errors[:about].any? ? ' is-invalid' : ''}", placeholder: 'Short story about yourself', rows: 2 %>
+              <% if @user.errors[:about].any? %>
+                  <span class="form-text invalid-feedback"><%= @user.errors[:about][0] %></span>
+              <% end %>
+            </div>
+            <div class="form-group">
+              <%= form.label :current_password %>
+              <%= form.password_field :current_password, class: "form-control#{@user.errors[:current_password].any? ? ' is-invalid' : ''}", placeholder: 'Your current password' %>
+              <% if @user.errors[:current_password].any? %>
+                  <span class="form-text invalid-feedback"><%= @user.errors[:current_password][0] %></span>
+              <% else %>
+                  <small class="form-text text-muted">Your password is required to perform save action.</small>
+              <% end %>
+            </div>
+            <div class="row">
+              <div class="col-12 col-sm-6">
+                <div class="form-group">
+                  <%= form.label :new_password %>
+                  <%= form.password_field :new_password, class: "form-control#{@user.errors[:new_password].any? ? ' is-invalid' : ''}", placeholder: 'New password' %>
+                  <% if @user.errors[:new_password].any? %>
+                      <span class="form-text invalid-feedback"><%= @user.errors[:new_password][0] %></span>
+                  <% else %>
+                      <small class="form-text text-muted">Leave it blank if you don't intend to change the password.
+                      </small>
+                  <% end %>
+                </div>
+              </div>
+              <div class="col-12 col-sm-6">
+                <div class="form-group">
+                  <%= form.label :new_password_confirmation, 'Repeat new password' %>
+                  <%= form.password_field :new_password_confirmation, class: "form-control#{@user.errors[:new_password_confirmation].any? ? ' is-invalid' : ''}", placeholder: 'Repeat your new password' %>
+                  <% if @user.errors[:new_password_confirmation].any? %>
+                      <span class="form-text invalid-feedback"><%= @user.errors[:new_password_confirmation][0] %></span>
+                  <% end %>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="form-group mt-4">
-            <button class="btn btn-block btn-primary">Save Changes</button>
-          </div>
-        </form>
+            <div class="form-group mt-4">
+              <%= submit_tag('Save Changes', {class: 'btn btn-block btn-primary'}) %>
+            </div>
+        <% end %>
+
       </div>
     </div>
   </div>

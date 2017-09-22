@@ -20,7 +20,7 @@
                   </div>
               <% end %>
               <div class="form-group">
-                <%= form.label :name, class: 'control-label' %>
+                <%= form.label :name %>
                 <%= form.text_field :name, class: "form-control#{@user.errors[:name].any? ? ' is-invalid' : ''}", placeholder: 'Enter your full name' %>
                 <% if @user.errors[:name].any? %>
                     <span class="form-text invalid-feedback"><%= @user.errors[:name][0] %></span>
