@@ -25,4 +25,20 @@ class ApplicationController < ActionController::Base
                         .group('year, month, month_name')
   end
 
+  def is_authorized
+    if session.has_key?('authorized_id')
+      @author = User.find(session.fetch(:authorized_id, '0'))
+      if @author.nil?
+        session.destroy
+        redirect_to login_path
+        false
+      else
+        true
+      end
+    else
+      redirect_to login_path
+      false
+    end
+  end
+
 end

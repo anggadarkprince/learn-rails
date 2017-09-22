@@ -1,7 +1,7 @@
 class AuthController < ApplicationController
 
   def login_form
-    if session.has_key?('authorized_id')
+    if session.has_key?('is_authorized')
       redirect_to articles_path
     else
       @user = User.new
@@ -11,20 +11,27 @@ class AuthController < ApplicationController
 
   def login
     username = params[:user][:username]
-    password = params[:user][:password]
-    @user = User.find_by_username(username)
+    @user = User.where(username: username).or(User.where(email: username)).take
     if !@user.nil?
-      if (@user.password == password)
-        session[:authorized_id] = @user.id
-        session[:authorized_username] = @user.username
-        session[:authorized_role] = @user.role
-        redirect_to articles_path
-      else
-        @user = User.new(username: username)
-        @user.errors.add(:password, 'Your password is wrong')
-        flash.now[:alert] = 'warning'
-        flash.now[:notice] = 'Login attempting failed'
-        render 'auth/login'
+      password = params[:user][:password]
+      begin
+        if (@user.hash_password == password)
+          session[:is_authorized] = true
+          session[:authorized_id] = @user.id
+          session[:authorized_username] = @user.username
+          session[:authorized_role] = @user.role
+          redirect_to articles_path
+        else
+          @user = User.new(username: username)
+          @user.errors.add(:password, 'Your password is wrong')
+          flash.now[:alert] = 'warning'
+          flash.now[:notice] = 'Login attempting failed'
+          render 'auth/login'
+        end
+      rescue BCrypt::Errors::InvalidHash
+        flash[:alert] = 'danger'
+        flash[:notice] = 'Your password seems invalid, please reset your credential to re-establish your password.'
+        redirect_to action: :login_form
       end
     else
       flash[:alert] = 'danger'
@@ -39,7 +46,7 @@ class AuthController < ApplicationController
   end
 
   def register_form
-    if session.has_key?('authorized_id')
+    if session.has_key?('is_authorized')
       redirect_to articles_path
     else
       @user = User.new

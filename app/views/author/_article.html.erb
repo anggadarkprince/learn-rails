@@ -25,7 +25,7 @@
       <%= truncate(strip_tags(article.content), length: 300, separator: ' ') %>
     </p>
 
-    <% if !session[:authorized_id].nil? && article.user_id == session[:authorized_id]  %>
+    <% if !session[:is_authorized].nil? && article.user_id == session[:authorized_id]  %>
         <a href="#" class="card-link" data-toggle="modal" data-target="#dialog-share">
           <%= t(:action_share) %>
         </a>

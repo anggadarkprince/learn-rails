@@ -15,7 +15,7 @@
         <p class="d-md-block" hidden>
           <%= @author.about.nil? ? 'No story available' : @author.about %>
         </p>
-        <% if !session[:authorized_id].nil? && @author.id == session[:authorized_id]  %>
+        <% if !session[:is_authorized].nil? && @author.id == session[:authorized_id]  %>
             <a class="btn btn-primary" href="<%= new_article_path %>" role="button">
               Create New Post
             </a>
@@ -45,7 +45,7 @@
             <div class="dropdown-menu dropdown-menu-right">
               <h6 class="dropdown-header">Method</h6>
               <%
-                if !session[:authorized_id].nil? && @author.id == session[:authorized_id] && params[:controller] == 'articles'
+                if !session[:is_authorized].nil? && @author.id == session[:authorized_id] && params[:controller] == 'articles'
                   sort_latest = articles_path order_by: 'latest'
                   sort_popularity = articles_path order_by: 'popularity'
                 else
@@ -63,6 +63,12 @@
           </div>
         </div>
       </div>
+
+      <% if @articles.count == 0 %>
+        <p>No articles available yet, <a href="<%= new_article_path %>">create new</a> one</p>
+          <% content_for :footer_fixed do %> fixed-bottom
+          <% end %>
+      <% end %>
 
       <%= render partial: 'author/article', collection: @articles %>
 

@@ -22,7 +22,7 @@
             <div class="form-group">
               <div class="form-group">
                 <%= form.label :username %>
-                <%= form.text_field :username, class: "form-control#{@user.errors[:username].any? ? ' is-invalid' : ''}", placeholder: 'Your user ID' %>
+                <%= form.text_field :username, class: "form-control#{@user.errors[:username].any? ? ' is-invalid' : ''}", placeholder: 'Your user ID or email' %>
                 <% if @user.errors[:username].any? %>
                     <span class="form-text invalid-feedback"><%= @user.errors[:username][0] %></span>
                 <% end %>

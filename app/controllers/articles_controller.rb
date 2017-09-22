@@ -1,22 +1,6 @@
 class ArticlesController < ApplicationController
   http_basic_authenticate_with name: 'angga', password: 'secret', except: [:index, :show]
 
-  def is_authorized
-    if session.has_key?('authorized_id')
-      @author = User.find(session.fetch(:authorized_id, '0'))
-      if @author.nil?
-        session.destroy
-        redirect_to login_path
-        false
-      else
-        true
-      end
-    else
-      redirect_to login_path
-      false
-    end
-  end
-
   def index
     if is_authorized
       articleData = @author.articles

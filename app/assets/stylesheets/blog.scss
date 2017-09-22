@@ -22,7 +22,7 @@ a:hover {
   margin: 2px;
   display: block;
 
-  &:hover{
+  &:hover {
     border-color: #007bff;
   }
 
@@ -39,7 +39,7 @@ a:hover {
   }
 }
 
-.list-node li+li:before {
+.list-node li + li:before {
   content: "";
   width: 5px;
   height: 5px;
@@ -49,9 +49,22 @@ a:hover {
   margin: 3px 5px 3px 0;
 }
 
-.custom-file-control:before{
+.custom-file-control {
+  text-overflow: ellipsis;
+
+  /* Required for text-overflow to do anything */
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.custom-file-control:before {
   content: "Browse";
 }
-.custom-file-control:after{
+
+.custom-file-control:after {
   content: "Select files..";
+}
+
+.custom-file-control.selected:lang(en)::after {
+  content: "" !important;
 }
