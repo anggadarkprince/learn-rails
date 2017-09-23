@@ -32,7 +32,7 @@
         <a href="<%= edit_article_path(article) %>" class="card-link">
           <%= t(:action_edit) %>
         </a>
-        <a href="#" class="card-link" data-toggle="modal" data-target="#dialog-delete">
+        <a href="<%= article_path(article) %>" data-title="<%= article.title %>" class="card-link btn-delete-article">
           <%= t(:action_delete) %>
         </a>
     <% end %>

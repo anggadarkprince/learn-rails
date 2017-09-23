@@ -1,7 +1,7 @@
 $(document).on('turbolinks:load', function () {
     $('.custom-file-input').on('change', function () {
         var fileName = $(this).val();
-        if (fileName != '') {
+        if (fileName !== '') {
             fileName = fileName.split('\\').pop();
         }
         $(this).next('.custom-file-control').addClass('selected').html(fileName);
@@ -9,6 +9,38 @@ $(document).on('turbolinks:load', function () {
 
     $('.tags').tagsinput({
         tagClass: 'badge badge-primary badge-pill'
+    });
+
+    $.ajax({
+        url: 'https://api.github.com/emojis',
+        async: false
+    }).then(function(data) {
+        window.emojis = Object.keys(data);
+        window.emojiUrls = data;
+    });;
+
+    $('.text-editor').summernote({
+        height: 200,
+        placeholder: 'Type a awesome content',
+        hint: {
+            match: /:([\-+\w]+)$/,
+            search: function (keyword, callback) {
+                callback($.grep(emojis, function (item) {
+                    return item.indexOf(keyword)  === 0;
+                }));
+            },
+            template: function (item) {
+                var content = emojiUrls[item];
+                return '<img src="' + content + '" width="20" /> :' + item + ':';
+            },
+            content: function (item) {
+                var url = emojiUrls[item];
+                if (url) {
+                    return $('<img />').attr('src', url).css('width', 20)[0];
+                }
+                return '';
+            }
+        }
     });
 
     function createSlug(str) {
@@ -21,7 +53,7 @@ $(document).on('turbolinks:load', function () {
     var slugify = $('.slugify');
     if (slugify.length) {
         var slugTarget = $('.slugify').data('target');
-        $('.slugify').keyup(function () {
+        slugify.keyup(function () {
             if (!$(slugTarget).hasClass('changed')) {
                 $(slugTarget).val(createSlug($(this).val()));
             }
@@ -29,7 +61,7 @@ $(document).on('turbolinks:load', function () {
 
         if ($(slugTarget).length) {
             $(slugTarget).keyup(function () {
-                if (slugify.val() != '') {
+                if (slugify.val() !== '') {
                     $(this).addClass('changed');
                 }
             });
@@ -45,6 +77,21 @@ $(document).on('turbolinks:load', function () {
             $(this).text('Set Slug').addClass('editing');
             $(slugTarget).removeAttr('readonly');
         }
+    })
+
+    $('.btn-delete-article').on('click', function(e){
+        e.preventDefault();
+
+        var title = $(this).data('title');
+        var urlDelete = $(this).attr('href');
+
+        var modalDelete = $('#modal-delete-article');
+        modalDelete.find('form').attr('action', urlDelete);
+        modalDelete.find('#article-title').text(title);
+        modalDelete.modal({
+            backdrop: 'static',
+            keyboard: false
+        });
     })
 
 });

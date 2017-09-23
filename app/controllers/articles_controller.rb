@@ -2,13 +2,13 @@ class ArticlesController < ApplicationController
 
   def index
     if is_authorized
-      articleData = @author.articles
+      article_data = @author.articles
       if params[:order_by] == 'popularity'
-        articleData = articleData.order(views: :desc)
+        article_data = article_data.order(views: :desc)
       else
-        articleData = articleData.order(created_at: :desc)
+        article_data = article_data.order(created_at: :desc)
       end
-      @articles = articleData.page params[:page]
+      @articles = article_data.page params[:page]
       render 'author/profile'
     end
   end
@@ -60,34 +60,45 @@ class ArticlesController < ApplicationController
   end
 
   def update
-    uploaded_io = params[:article][:featured]
-    if !uploaded_io.nil?
-      filename = Time.now.strftime('%Y-%m-%d_%H%M%S') + '_' + uploaded_io.original_filename
-      File.open(Rails.root.join('public/images', 'features', filename), 'wb') do |file|
-        file.write(uploaded_io.read)
-        params[:article][:featured] = filename
+    if is_authorized
+      uploaded_io = params[:article][:featured]
+      unless uploaded_io.nil?
+        filename = Time.now.strftime('%Y-%m-%d_%H%M%S') + '_' + uploaded_io.original_filename
+        File.open(Rails.root.join('public/images', 'features', filename), 'wb') do |file|
+          file.write(uploaded_io.read)
+          params[:article][:featured] = filename
+        end
       end
-    end
 
-    @article = Article.find(params[:id])
-    @article.article_tags.destroy
+      @article = Article.find(params[:id])
+      @article.article_tags.destroy
 
-    if @article.update(article_params)
-      flash[:alert] = 'success'
-      flash[:notice] = 'Article was successfully updated.'
-      redirect_to action: :index
-    else
-      flash.now[:alert] = 'danger'
-      flash.now[:notice] = 'Something went wrong, try again or contact our support.'
-      render 'edit'
+      if @article.update(article_params)
+        flash[:alert] = 'success'
+        flash[:notice] = 'Article was successfully updated.'
+        redirect_to action: :index
+      else
+        flash.now[:alert] = 'danger'
+        flash.now[:notice] = 'Something went wrong, try again or contact our support.'
+        render 'edit'
+      end
     end
   end
 
   def destroy
-    @article = Article.find(params[:id])
-    @article.destroy
+    if is_authorized
+      @article = Article.find(params[:id])
 
-    redirect_to articles_path
+      if @article.destroy
+        flash[:alert] = 'warning'
+        flash[:notice] = 'Article was successfully deleted.'
+      else
+        flash[:alert] = 'danger'
+        flash[:notice] = 'Something went wrong, try again or contact our support.'
+      end
+
+      redirect_to articles_path
+    end
   end
 
   private

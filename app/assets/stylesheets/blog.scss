@@ -69,9 +69,26 @@ a:hover {
   content: "" !important;
 }
 
+.modal-header {
+  border-bottom: none;
+}
+
 .bootstrap-tagsinput {
   width: 100%;
   box-shadow: none;
   padding: 0.5rem 0.75rem;
   line-height: 1.25;
+}
+
+.note-editor.note-frame {
+  border-color: #f7f7f7;
+}
+
+.note-editor.note-frame .note-placeholder {
+  font-size: 18px;
+}
+
+.note-icon-font.note-recent-color {
+  background-color: transparent !important;
+  color: inherit !important;
 }

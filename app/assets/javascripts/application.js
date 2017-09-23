@@ -15,6 +15,7 @@
 //= require popper
 //= require bootstrap
 //= require bootstrap-tagsinput
+//= require summernote
 //= require rails-ujs
 //= require turbolinks
 //= require_tree .
