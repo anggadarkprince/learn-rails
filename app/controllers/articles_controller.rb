@@ -1,5 +1,4 @@
 class ArticlesController < ApplicationController
-  #http_basic_authenticate_with name: 'angga', password: 'secret', except: [:index, :show]
 
   def index
     if is_authorized
@@ -26,15 +25,11 @@ class ArticlesController < ApplicationController
     end
   end
 
-  def edit
-    @article = Article.find(params[:id])
-  end
-
   def create
     if is_authorized
       uploaded_io = params[:article][:featured]
       if !uploaded_io.nil?
-        filename = uploaded_io.original_filename
+        filename = Time.now.strftime('%Y-%m-%d_%H%M%S') + '_' + uploaded_io.original_filename
         File.open(Rails.root.join('public/images', 'features', filename), 'wb') do |file|
           file.write(uploaded_io.read)
           params[:article][:featured] = filename
@@ -48,7 +43,7 @@ class ArticlesController < ApplicationController
 
       if @article.save
         flash[:alert] = 'success'
-        flash[:notice] = 'Post settings was successfully created.'
+        flash[:notice] = 'Article was successfully created.'
         redirect_to action: :index
       else
         flash.now[:alert] = 'danger'
@@ -58,12 +53,32 @@ class ArticlesController < ApplicationController
     end
   end
 
+  def edit
+    if is_authorized
+      @article = Article.find(params[:id])
+    end
+  end
+
   def update
+    uploaded_io = params[:article][:featured]
+    if !uploaded_io.nil?
+      filename = Time.now.strftime('%Y-%m-%d_%H%M%S') + '_' + uploaded_io.original_filename
+      File.open(Rails.root.join('public/images', 'features', filename), 'wb') do |file|
+        file.write(uploaded_io.read)
+        params[:article][:featured] = filename
+      end
+    end
+
     @article = Article.find(params[:id])
+    @article.article_tags.destroy
 
     if @article.update(article_params)
-      redirect_to @article
+      flash[:alert] = 'success'
+      flash[:notice] = 'Article was successfully updated.'
+      redirect_to action: :index
     else
+      flash.now[:alert] = 'danger'
+      flash.now[:notice] = 'Something went wrong, try again or contact our support.'
       render 'edit'
     end
   end

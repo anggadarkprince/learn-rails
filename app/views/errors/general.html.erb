@@ -1,0 +1,10 @@
+<% if model.errors.any? %>
+    <div class="text-danger mb-2">
+      <h4><%= pluralize(model.errors.count, 'error') %> occurred, please check message below:</h4>
+      <ul>
+        <% model.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+<% end %>

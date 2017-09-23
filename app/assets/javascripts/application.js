@@ -14,6 +14,7 @@
 //= require jquery_ujs
 //= require popper
 //= require bootstrap
+//= require bootstrap-tagsinput
 //= require rails-ujs
 //= require turbolinks
 //= require_tree .

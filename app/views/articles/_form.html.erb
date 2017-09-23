@@ -7,21 +7,10 @@
     </div>
 <% end %>
 
-<% if @article.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@article.errors.count, 'error') %> prohibited this article from being saved:</h2>
-      <ul>
-        <% @article.errors.full_messages.each do |msg| %>
-            <li><%= msg %></li>
-        <% end %>
-      </ul>
-    </div>
-<% end %>
-
 <%= form_for @article, class: 'mb-5' do |form| %>
     <div class="form-group">
       <%= form.label :title %>
-      <%= form.text_field :title, class: "form-control#{@article.errors[:title].any? ? ' is-invalid' : ''}", placeholder: 'Post title' %>
+      <%= form.text_field :title, 'data-target': '#article_slug', class: "slugify form-control#{@article.errors[:title].any? ? ' is-invalid' : ''}", placeholder: 'Post title' %>
       <% if @article.errors[:name].any? %>
           <span class="form-text invalid-feedback"><%= @article.errors[:title][0] %></span>
       <% end %>
@@ -30,13 +19,13 @@
       <%= form.label :slug %>
       <div class="input-group">
         <span class="input-group-addon"><%= root_url %>/article/</span>
-        <%= form.text_field :slug, class: "form-control#{@article.errors[:slug].any? ? ' is-invalid' : ''}" %>
+        <%= form.text_field :slug, class: "form-control#{@article.errors[:slug].any? ? ' is-invalid' : ''}", readonly: true %>
         <span class="input-group-btn">
-          <button class="btn btn-primary" type="button">Edit</button>
+          <button class="btn btn-primary" id="btn-edit-slug" data-target="#article_slug" type="button">Edit</button>
         </span>
       </div>
       <% if @article.errors[:slug].any? %>
-          <span class="form-text invalid-feedback"><%= @article.errors[:slug][0] %></span>
+          <span class="form-text invalid-feedback d-block"><%= @article.errors[:slug][0] %></span>
       <% else %>
           <small id="username-help" class="form-text text-muted">
             Automatic guessed, must be unique and separated by dash.
@@ -46,8 +35,8 @@
     <div class="form-group">
       <%= form.label :category_id, 'Category' %>
       <%= form.collection_select :category_id, Category.all, :id, :category, {prompt: 'Select a category'}, {class: "custom-select d-block form-control#{@article.errors[:category_id].any? ? ' is-invalid' : ''}"} %>
-      <% if @article.errors[:category].any? %>
-          <span class="form-text invalid-feedback"><%= @article.errors[:category][0] %></span>
+      <% if @article.errors[:category_id].any? %>
+          <span class="form-text invalid-feedback"><%= @article.errors[:category_id][0] %></span>
       <% end %>
     </div>
     <div class="row">
@@ -66,6 +55,9 @@
               <span class="custom-control-description"> Draft</span>
             </label>
           </div>
+          <% if @article.errors[:status].any? %>
+              <span class="form-text invalid-feedback d-block"><%= @article.errors[:status][0] %></span>
+          <% end %>
         </div>
       </div>
       <div class="col col-sm-6">
@@ -91,9 +83,9 @@
       <% end %>
     </div>
     <div class="form-group">
-      <%= form.label :all_tags %>
+      <%= form.label :all_tags, 'Tags' %>
       <div>
-        <%= form.text_field :all_tags, class: "form-control#{@article.errors[:all_tags].any? ? ' is-invalid' : ''}", placeholder: 'Tags separated with comma' %>
+        <%= form.text_field :all_tags, class: "tags form-control#{@article.errors[:all_tags].any? ? ' is-invalid' : ''}", placeholder: 'Tags separated with comma' %>
       </div>
       <% if @article.errors[:all_tags].any? %>
           <span class="form-text invalid-feedback"><%= @article.errors[:all_tags][0] %></span>

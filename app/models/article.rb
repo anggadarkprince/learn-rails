@@ -8,6 +8,8 @@ class Article < ApplicationRecord
   validates :title, presence: true, length: { maximum: 200 }
   validates :slug, presence: true, length: { maximum: 500 }
   validates :content, presence: true, length: { minimum: 5, maximum: 10000 }
+  validates :status, presence: true
+  validates :category_id, presence: true
   validates :views, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
 
   belongs_to :user
@@ -16,6 +18,18 @@ class Article < ApplicationRecord
   has_many :comments, dependent: :destroy
   has_many :article_tags, dependent: :destroy
   has_many :tags, through: :article_tags
+
+  before_save :slugify
+
+  def slugify
+    if slug.present?
+      self.slug = self.slug.strip.parameterize
+    end
+  end
+
+  def to_param
+    "#{id}-#{title.parameterize(preserve_case: true)}"
+  end
 
   def all_tags=(tags)
     self.tags = tags.split(',').map do |tag_name|

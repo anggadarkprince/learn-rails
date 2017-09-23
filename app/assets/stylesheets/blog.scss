@@ -68,3 +68,10 @@ a:hover {
 .custom-file-control.selected:lang(en)::after {
   content: "" !important;
 }
+
+.bootstrap-tagsinput {
+  width: 100%;
+  box-shadow: none;
+  padding: 0.5rem 0.75rem;
+  line-height: 1.25;
+}
