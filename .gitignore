@@ -21,8 +21,11 @@
 /yarn-error.log
 
 config/application.yml
-app/assets/images/avatars
-app/assets/images/features
+/public/images/avatars/*
+!/public/images/avatars/.keep
+!/public/images/avatars/noavatar.jpg
+/public/images/features/*
+!/public/images/features/.keep
 
 .byebug_history
 .idea

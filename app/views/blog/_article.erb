@@ -1,6 +1,5 @@
 <div class="mb-5">
-  <img class="mb-3" style="height: 230px; width: 100%; display: block; background: url('<%= asset_path('features/'+article.featured) %>') center center / cover">
-  <h3>
+  <img class="mb-3" style="height: 230px; width: 100%; display: block; background: url('/images/features/<%= article.featured %>') center center / cover">
     <a href="<%= url_for(controller: 'blog', action: 'show', slug: article.slug) %>">
       <%= article.title %>
     </a>

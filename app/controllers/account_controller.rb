@@ -11,6 +11,13 @@ class AccountController < ApplicationController
     if is_authorized
       @user = User.find(session[:authorized_id])
 
+      uploaded_io = params[:user][:avatar]
+      filename = uploaded_io.original_filename
+      File.open(Rails.root.join('public/images', 'avatars', filename), 'wb') do |file|
+        file.write(uploaded_io.read)
+        params[:user][:avatar] = filename
+      end
+
       if @user.update(settings_params)
         flash[:alert] = 'success'
         flash[:notice] = 'Account settings was successfully updated.'
@@ -25,7 +32,7 @@ class AccountController < ApplicationController
 
   private
   def settings_params
-    params.require(:user).permit(:name, :username, :email, :about, :current_password, :new_password, :new_password_confirmation)
+    params.require(:user).permit(:name, :username, :email, :about, :avatar, :current_password, :new_password, :new_password_confirmation)
   end
 
 end

@@ -13,7 +13,7 @@
         <% @onTheWeekAuthors.each do |author| %>
             <a title="<%= author.name %>" href="<%= url_for(controller: 'author', action: 'profile', username: author.username) %>">
               <img alt="<%= author.name %>" class="mr-3 mb-3" style="width: 70px; height: 70px;"
-                   src="/assets/avatars/<%= author.avatar %>"
+                   src="/images/avatars/<%= author.avatar %>"
                    data-holder-rendered="true">
             </a>
         <% end %>

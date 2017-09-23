@@ -52,7 +52,7 @@ class User < ApplicationRecord
   end
 
   def must_include_current_password
-    if hash_password != current_password
+    if verify_password != current_password
       errors.add(:current_password, 'Password mismatch with the current one.')
     else
       self.password = current_password

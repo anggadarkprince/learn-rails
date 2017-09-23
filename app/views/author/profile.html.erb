@@ -5,7 +5,7 @@
   <div class="container">
     <div class="d-block d-sm-flex text-center text-sm-left">
       <img class="mr-sm-3 mb-3" style="width: 90px; height: 90px;"
-           src="/assets/avatars/<%= @author.avatar %>"
+           src="/images/avatars/<%= @author.avatar %>"
            data-holder-rendered="true">
       <div class="p-md-1">
         <h3 class="mb-3 mb-md-1">
@@ -15,7 +15,7 @@
         <p class="d-md-block" hidden>
           <%= @author.about.nil? ? 'No story available' : @author.about %>
         </p>
-        <% if !session[:is_authorized].nil? && @author.id == session[:authorized_id]  %>
+        <% if !session[:is_authorized].nil? && @author.id == session[:authorized_id] %>
             <a class="btn btn-primary" href="<%= new_article_path %>" role="button">
               Create New Post
             </a>
@@ -65,7 +65,7 @@
       </div>
 
       <% if @articles.count == 0 %>
-        <p>No articles available yet, <a href="<%= new_article_path %>">create new</a> one</p>
+          <p>No articles available yet, <a href="<%= new_article_path %>">create new</a> one</p>
           <% content_for :footer_fixed do %> fixed-bottom
           <% end %>
       <% end %>
