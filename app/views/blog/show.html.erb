@@ -16,7 +16,7 @@
           <li class="breadcrumb-item active"><%= @article.title %></li>
         </ol>
 
-        <img class="mb-3" style="height: 230px; width: 100%; display: block; background: url('<%= asset_path('features/'+@article.featured) %>') center center / cover">
+        <img class="mb-3" style="height: 230px; width: 100%; display: block; background: url('/images/features/<%= @article.featured %>') center center / cover">
 
         <h3><%= @article.title %></h3>
         <ul class="list-inline list-node">
@@ -51,7 +51,7 @@
           <div class="card-body">
             <div class="d-block d-sm-flex text-center text-sm-left">
               <img class="mr-sm-3 mb-3 mb-sm-0" style="width: 90px; height: 90px;"
-                   src="/assets/avatars/<%= @article.user.avatar %>"
+                   src="/images/avatars/<%= @article.user.avatar %>"
                    data-holder-rendered="true">
               <div>
                 <p class="lead mb-3 mb-md-1">

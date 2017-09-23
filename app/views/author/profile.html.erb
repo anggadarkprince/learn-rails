@@ -1,29 +1,7 @@
 <% content_for :title do %> - <%= @author.name %>
 <% end %>
 
-<div class="jumbotron">
-  <div class="container">
-    <div class="d-block d-sm-flex text-center text-sm-left">
-      <img class="mr-sm-3 mb-3" style="width: 90px; height: 90px;"
-           src="/images/avatars/<%= @author.avatar %>"
-           data-holder-rendered="true">
-      <div class="p-md-1">
-        <h3 class="mb-3 mb-md-1">
-          <span class="d-md-inline" hidden>Welcome back, </span>
-          <strong><%= @author.name %>!</strong>
-        </h3>
-        <p class="d-md-block" hidden>
-          <%= @author.about.nil? ? 'No story available' : @author.about %>
-        </p>
-        <% if !session[:is_authorized].nil? && @author.id == session[:authorized_id] %>
-            <a class="btn btn-primary" href="<%= new_article_path %>" role="button">
-              Create New Post
-            </a>
-        <% end %>
-      </div>
-    </div>
-  </div>
-</div>
+<%= render 'author/header' %>
 
 <div class="container">
   <div class="row">
@@ -63,6 +41,15 @@
           </div>
         </div>
       </div>
+
+      <% if flash[:alert] %>
+          <div class="alert alert-<%= flash[:alert] %>" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <%= flash[:notice] %>
+          </div>
+      <% end %>
 
       <% if @articles.count == 0 %>
           <p>No articles available yet, <a href="<%= new_article_path %>">create new</a> one</p>

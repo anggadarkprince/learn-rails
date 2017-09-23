@@ -1,5 +1,5 @@
 class ArticlesController < ApplicationController
-  http_basic_authenticate_with name: 'angga', password: 'secret', except: [:index, :show]
+  #http_basic_authenticate_with name: 'angga', password: 'secret', except: [:index, :show]
 
   def index
     if is_authorized
@@ -15,11 +15,15 @@ class ArticlesController < ApplicationController
   end
 
   def show
-    @article = Article.find(params[:id])
+    if is_authorized
+      @article = Article.find(params[:id])
+    end
   end
 
   def new
-    @article = Article.new
+    if is_authorized
+      @article = Article.new
+    end
   end
 
   def edit
@@ -27,12 +31,30 @@ class ArticlesController < ApplicationController
   end
 
   def create
-    @article = Article.new(article_params)
+    if is_authorized
+      uploaded_io = params[:article][:featured]
+      if !uploaded_io.nil?
+        filename = uploaded_io.original_filename
+        File.open(Rails.root.join('public/images', 'features', filename), 'wb') do |file|
+          file.write(uploaded_io.read)
+          params[:article][:featured] = filename
+        end
+      else
+        params[:article][:featured] = 'no-feature.jpg'
+      end
+      params[:article][:user_id] = @author.id
 
-    if @article.save
-      redirect_to @article
-    else
-      render 'new'
+      @article = Article.new(article_params)
+
+      if @article.save
+        flash[:alert] = 'success'
+        flash[:notice] = 'Post settings was successfully created.'
+        redirect_to action: :index
+      else
+        flash.now[:alert] = 'danger'
+        flash.now[:notice] = 'Something went wrong, try again or contact our support.'
+        render 'new'
+      end
     end
   end
 
@@ -55,7 +77,7 @@ class ArticlesController < ApplicationController
 
   private
   def article_params
-    params.require(:article).permit(:title, :content)
+    params.require(:article).permit(:title, :slug, :content, :featured, :status, :user_id, :all_tags, :category_id)
   end
 
 end
