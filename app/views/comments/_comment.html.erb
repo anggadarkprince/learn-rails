@@ -23,15 +23,19 @@
       <%= comment.created_at.strftime('%B %d, %Y %I:%M %p') %>
     </p>
     <%= comment.comment %>
-    <ul class="list-inline">
+    <ul class="list-inline comment-control" data-id="<%= comment.id %>">
       <li class="list-inline-item">
-        <a href="#"><span class="arrow arrow-up"></span></a>
+        <a href="<%= vote_comment_url type: 'up' %>" class="btn-vote" data-type="up">
+          <span class="arrow arrow-up"></span>
+        </a>
       </li>
-      <li class="list-inline-item">
+      <li class="list-inline-item vote-counter">
         <%= comment.votes %>
       </li>
       <li class="list-inline-item">
-        <a href="#"><span class="arrow arrow-down"></span></a>
+        <a href="<%= vote_comment_url type: 'down' %>" class="btn-vote" data-type="down">
+          <span class="arrow arrow-down"></span>
+        </a>
       </li>
       <li class="list-inline-item">
         <%= link_to t(:action_reply), [comment.article, comment] %>

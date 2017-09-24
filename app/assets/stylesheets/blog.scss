@@ -82,6 +82,28 @@ article {
   content: "" !important;
 }
 
+.btn-vote {
+  &:active, &:focus {
+    outline: 0;
+    border: none;
+    -moz-outline-style: none
+  }
+
+  &.disabled,
+  &[disabled] {
+    pointer-events: none;
+
+    .arrow {
+      &.arrow-up {
+        border-bottom-color: #cccccc;
+      }
+      &.arrow-down {
+        border-top-color: #cccccc;
+      }
+    }
+  }
+}
+
 .modal-header {
   border-bottom: none;
 }

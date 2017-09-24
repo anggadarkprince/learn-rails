@@ -34,6 +34,7 @@ Rails.application.routes.draw do
     end
 
     post '/articles/count', to: 'articles#counter', as: 'count_article'
+    post '/comments/vote/:type', to: 'comments#vote', as: 'vote_comment'
 
   end
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
