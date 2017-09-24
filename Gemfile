@@ -19,6 +19,7 @@ gem 'sass-rails', '~> 5.0'
 gem 'bootstrap', '~> 4.0.0.beta'
 gem 'bootstrap-tagsinput-rails'
 gem 'summernote-rails'
+gem 'simple-line-icons-rails'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes

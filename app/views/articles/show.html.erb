@@ -1,18 +1,50 @@
-<p>
-  <strong>Title:</strong>
-  <%= @article.title %>
-</p>
+<% content_for :title do %> - <%= @article.title %>
+<% end %>
 
-<p>
-  <strong>Text:</strong>
-  <%= @article.text %>
-</p>
+<%= render 'author/header' %>
 
-<h2>Comments</h2>
-<%= render @article.comments %>
+<div class="container">
+  <div class="row">
+    <div class="col-lg-8 ml-lg-auto mr-lg-auto">
 
-<h2>Add a comment:</h2>
-<%= render 'comments/form' %>
+      <div class="mb-4 d-flex justify-content-between">
+        <h4 class="d-flex align-items-center mb-0">
+          <a href="<%= articles_path %>">
+            <i class="icon-arrow-left-circle mr-2"></i>
+          </a>
+          Back to list
+        </h4>
+        <div>
+          <a href="<%= edit_article_path @article %>" class="btn btn-primary">
+            Edit Article <i class="icon-arrow-right-circle ml-1 align-middle"></i>
+          </a>
+          <a href="<%= blog_show_path slug: @article.slug %>" class="btn btn-primary">
+            <i class="icon-eye align-middle"></i>
+          </a>
+        </div>
+      </div>
 
-<%= link_to 'Edit', edit_article_path(@article) %> |
-<%= link_to 'Back', article_path %>
+      <% if flash[:alert] %>
+          <div class="alert alert-<%= flash[:alert] %>" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <%= flash[:notice] %>
+          </div>
+      <% end %>
+
+      <%= render partial: 'articles/viewer', locals: {article: @article} %>
+
+      <h4 class="mb-4 mt-5"><%= t(:label_author) %></h4>
+      <%= render partial: 'author/author_card', locals: {author: @article.user} %>
+
+      <h4 class="mb-4 mt-5" id="comment"><%= t(:label_comments) %></h4>
+      <%= render 'comments/form' %>
+
+      <div class="mb-5 mt-5">
+        <%= render @article.comments.where('comment_id IS NULL').order(created_at: :desc) %>
+      </div>
+
+    </div>
+  </div>
+</div>

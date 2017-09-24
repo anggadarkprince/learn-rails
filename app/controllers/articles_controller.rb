@@ -9,7 +9,7 @@ class ArticlesController < ApplicationController
         article_data = article_data.order(created_at: :desc)
       end
       @articles = article_data.page params[:page]
-      render 'author/profile'
+      @author = User.find(session.fetch(:authorized_id, '0'))
     end
   end
 

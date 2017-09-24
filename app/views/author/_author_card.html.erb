@@ -1,0 +1,32 @@
+<div class="card">
+  <div class="card-body">
+    <div class="d-block d-sm-flex text-center text-sm-left">
+      <img class="mr-sm-3 mb-3 mb-sm-0" style="width: 90px; height: 90px;"
+           src="/images/avatars/<%= author.avatar %>"
+           data-holder-rendered="true">
+      <div>
+        <p class="lead mb-3 mb-md-1">
+          <strong><%= author.name %></strong>
+          <small class="text-muted">@<%= author.username %></small>
+        </p>
+        <ul class="list-inline list-node text-muted mb-1">
+          <li class="list-inline-item">
+            Total <%= t(:menu_articles) %> <%= author.articles.count %>
+          </li>
+          <li class="list-inline-item d-sm-inline" hidden>
+            <%= t(:label_since) %> <%= author.created_at.strftime('%B %d, %Y') %>
+          </li>
+        </ul>
+        <p class="d-md-block
+          <%= params[:controller] == 'articles' ? ' mb-0' : '' %>" hidden>
+          <%= author.about %>
+        </p>
+        <% unless params[:controller] == 'articles' %>
+            <a class="btn btn-primary" href="<%= url_for(controller: 'author', action: 'profile', username: author.username) %>" role="button">
+              View Profile
+            </a>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

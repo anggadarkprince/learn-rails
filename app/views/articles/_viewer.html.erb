@@ -1,0 +1,41 @@
+<ol class="breadcrumb pl-0 bg-transparent">
+  <li class="breadcrumb-item"><a href="/"><%= t(:menu_articles) %></a></li>
+  <li class="breadcrumb-item">
+    <a href="/category/<%= article.category.slug %>">
+      <%= article.category.category %>
+    </a>
+  </li>
+  <li class="breadcrumb-item active"><%= article.title %></li>
+</ol>
+
+<img class="mb-3" style="height: 230px; width: 100%; display: block; background: url('/images/features/<%= article.featured %>') center center / cover">
+
+<h3><%= article.title %></h3>
+<ul class="list-inline list-node">
+  <li class="list-inline-item">
+    <%= article.created_at.strftime('%B %d, %Y %I:%M %p') %>
+  </li>
+  <li class="list-inline-item">
+    <%= t(:label_posted_by) %>
+    <a href="/author/<%= article.user.username %>">
+      <%= article.user.name %>
+    </a>
+  </li>
+  <li class="list-inline-item">
+    <%= article.comments.count %> <%= t(:label_comments) %>
+  </li>
+  <li class="list-inline-item">
+    <%= article.views %>x <%= t(:label_views) %>
+  </li>
+</ul>
+<div>
+  <%= raw article.content %>
+</div>
+
+<div class="lead mb-5">
+  <% article.tags.each do |tag| %>
+      <a href="/tag/<%= tag.slug %>" class="badge badge-pill badge-primary">
+        #<%= tag.tag %>
+      </a>
+  <% end %>
+</div>

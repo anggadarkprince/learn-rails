@@ -4,70 +4,11 @@
 <div class="container mt-5">
   <div class="row">
     <div class="col-lg-9">
-
       <div class="pr-xl-4">
-        <ol class="breadcrumb pl-0 bg-transparent">
-          <li class="breadcrumb-item"><a href="/"><%= t(:menu_articles) %></a></li>
-          <li class="breadcrumb-item">
-            <a href="/category/<%= @article.category.slug %>">
-              <%= @article.category.category %>
-            </a>
-          </li>
-          <li class="breadcrumb-item active"><%= @article.title %></li>
-        </ol>
-
-        <img class="mb-3" style="height: 230px; width: 100%; display: block; background: url('/images/features/<%= @article.featured %>') center center / cover">
-
-        <h3><%= @article.title %></h3>
-        <ul class="list-inline list-node">
-          <li class="list-inline-item">
-            <%= @article.created_at.strftime('%B %d, %Y %I:%M %p') %>
-          </li>
-          <li class="list-inline-item">
-            <%= t(:label_posted_by) %>
-            <a href="/author/<%= @article.user.username %>">
-              <%= @article.user.name %>
-            </a>
-          </li>
-          <li class="list-inline-item">
-            <%= @article.comments.where('comment_id IS NULL').count %> <%= t(:label_comments) %>
-          </li>
-          <li class="list-inline-item">
-            <%= @article.views %>x <%= t(:label_views) %>
-          </li>
-        </ul>
-        <div>
-          <%= raw @article.content %>
-        </div>
-
-        <div class="lead mb-5">
-          <% @article.tags.each do |tag| %>
-              <a href="/tag/<%= tag.slug %>" class="badge badge-pill badge-primary">#<%= tag.tag %></a>
-          <% end %>
-        </div>
+        <%= render partial: 'articles/viewer', locals: {article: @article} %>
 
         <h4 class="mb-4 mt-5"><%= t(:label_author) %></h4>
-        <div class="card">
-          <div class="card-body">
-            <div class="d-block d-sm-flex text-center text-sm-left">
-              <img class="mr-sm-3 mb-3 mb-sm-0" style="width: 90px; height: 90px;"
-                   src="/images/avatars/<%= @article.user.avatar %>"
-                   data-holder-rendered="true">
-              <div>
-                <p class="lead mb-3 mb-md-1">
-                  <strong><%= @article.user.name %></strong>
-                  <small class="text-muted">@<%= @article.user.username %></small>
-                </p>
-                <p class="d-md-block" hidden>
-                  <%= @article.user.about %>
-                </p>
-                <a class="btn btn-primary" href="<%= url_for(controller: 'author', action: 'profile', username: @article.user.username) %>" role="button">
-                  View Profile
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
+        <%= render partial: 'author/author_card', locals: {author: @article.user} %>
 
         <h4 class="mb-4 mt-5" id="comment"><%= t(:label_comments) %></h4>
         <%= render 'comments/form' %>
@@ -76,7 +17,6 @@
           <%= render @article.comments.where('comment_id IS NULL').order(created_at: :desc) %>
         </div>
       </div>
-
     </div>
     <div class="col-lg-3 d-md-block" hidden>
       <%= render 'sidebar' %>

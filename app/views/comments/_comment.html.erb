@@ -1,6 +1,6 @@
 <%
-  registeredCommenter = User.find_by_email(comment.email)
-  if(registeredCommenter.nil?)
+  registeredCommenter = User.find(comment.user_id)
+  if registeredCommenter.nil?
     avatar = 'noavatar.jpg'
   else
     avatar = registeredCommenter.avatar
@@ -8,7 +8,7 @@
 %>
 <div class="media">
   <a class="d-flex pr-3" href="#">
-    <img style="height: 64px; width: 64px; display: block; background: url('<%= asset_path('avatars/'+avatar) %>') center center / cover">
+    <img style="height: 64px; width: 64px; display: block; background: url('/images/avatars/<%= avatar %>') center center / cover">
   </a>
   <div class="media-body">
     <h5 class="mt-0">
@@ -36,11 +36,13 @@
       <li class="list-inline-item">
         <%= link_to t(:action_reply), [comment.article, comment] %>
       </li>
-      <li class="list-inline-item">
-        <%= link_to t(:action_delete), [comment.article, comment],
-                    method: :delete,
-                    data: { confirm: 'Are you sure?' } %>
-      </li>
+      <% if !registeredCommenter.nil? && is_authorized(registeredCommenter) || params[:controller] == 'articles' %>
+        <li class="list-inline-item">
+          <%= link_to t(:action_delete), [comment.article, comment],
+                      method: :delete,
+                      data: { confirm: 'Are you sure?' } %>
+        </li>
+      <% end %>
 
     </ul>
 

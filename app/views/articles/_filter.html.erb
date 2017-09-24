@@ -1,0 +1,27 @@
+<div class="dropdown">
+  <button class="btn btn-outline-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <% if (params[:order_by] == 'popularity') %>
+        <%= t(:sort_popularity) %>
+    <% else %>
+        <%= t(:sort_latest) %>
+    <% end %>
+  </button>
+  <div class="dropdown-menu dropdown-menu-right">
+    <h6 class="dropdown-header">Method</h6>
+    <%
+      if is_authorized(author) && params[:controller] == 'articles'
+        sort_latest = articles_path order_by: 'latest'
+        sort_popularity = articles_path order_by: 'popularity'
+      else
+        sort_latest = profile_path username: author.username, order_by: 'latest'
+        sort_popularity = profile_path username: author.username, order_by: 'popularity'
+      end
+    %>
+    <a class="dropdown-item" href="<%= sort_latest %>">
+      <i class="icon-calendar mr-1"></i> <%= t(:sort_latest) %>
+    </a>
+    <a class="dropdown-item" href="<%= sort_popularity %>">
+      <i class="icon-trophy mr-1"></i> <%= t(:sort_popularity) %>
+    </a>
+  </div>
+</div>

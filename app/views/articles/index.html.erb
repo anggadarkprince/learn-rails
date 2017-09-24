@@ -1,20 +1,92 @@
-<h1>Listing articles</h1>
-<%= link_to 'New article', new_article_path %>
-<table>
-  <tr>
-    <th>Title</th>
-    <th>Content</th>
-  </tr>
+<% content_for :title do %> - <%= @author.name %>
+<% end %>
 
-  <% @articles.each do |article| %>
-      <tr>
-        <td><%= article.title %></td>
-        <td><%= article.content %></td>
-        <td><%= link_to 'Show', article_path(article) %></td>
-        <td><%= link_to 'Edit', edit_article_path(article) %></td>
-        <td><%= link_to 'Destroy', article_path(article),
-                        method: :delete,
-                        data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-  <% end %>
-</table>
+<%= render 'author/header' %>
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-8 ml-lg-auto mr-lg-auto">
+      <div class="row mb-4">
+        <div class="col-6 mt-2">
+          <h4><%= t(:menu_articles) %></h4>
+        </div>
+        <div class="col-6 text-right">
+          <%= render partial: 'articles/filter', locals: {author: @author} %>
+        </div>
+      </div>
+
+      <% if flash[:alert] %>
+          <div class="alert alert-<%= flash[:alert] %>" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <%= flash[:notice] %>
+          </div>
+      <% end %>
+
+      <% if @articles.count == 0 %>
+          <p>No articles available yet, <a href="<%= new_article_path %>">create new</a> one</p>
+          <% content_for :footer_fixed do %> fixed-bottom
+          <% end %>
+      <% end %>
+
+      <%= render partial: 'articles/article_card', collection: @articles %>
+
+      <%= paginate @articles %>
+
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="modal-delete-article">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Delete Article</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p class="lead">Are you sure want to delete this article
+          <strong class="text-danger" id="article-title"></strong>?
+        </p>
+      </div>
+      <div class="modal-footer">
+        <form action="#" method="post">
+          <input name="utf8" type="hidden" value="&#x2713;"/>
+          <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
+          <input name="_method" value="delete" type="hidden">
+          <button type="button" class="btn btn-light" data-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-danger">Delete</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="dialog-share">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Share Article</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-sm-4">
+            <a href="#" class="btn btn-primary btn-lg btn-block">Facebook</a>
+          </div>
+          <div class="col-sm-4">
+            <a href="#" class="btn btn-info btn-lg btn-block">Twitter</a>
+          </div>
+          <div class="col-sm-4">
+            <a href="#" class="btn btn-danger btn-lg btn-block">Google</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

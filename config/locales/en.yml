@@ -65,6 +65,7 @@ en:
   action_reply: "Reply"
   action_delete: "Delete"
   action_edit: "Edit"
+  action_view: "View"
 
   sort_latest: "Latest Date"
   sort_popularity: "Popularity"

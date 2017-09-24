@@ -1,10 +1,16 @@
-<div class="card mb-4">
+<div class="card mb-5">
   <img class="card-img-top" style="height: 180px; width: 100%; display: block; background: url('/images/features/<%= article.featured %>') center center / cover">
   <div class="card-body">
     <h4 class="card-title">
-      <a href="<%= url_for(controller: 'blog', action: 'show', slug: article.slug) %>">
-        <%= article.title %>
-      </a>
+      <% if is_authorized(article) %>
+          <a href="<%= article_path article %>">
+            <%= article.title %>
+          </a>
+      <% else %>
+          <a href="<%= url_for(controller: 'blog', action: 'show', slug: article.slug) %>">
+            <%= article.title %>
+          </a>
+      <% end %>
     </h4>
     <ul class="list-inline list-node text-muted">
       <li class="list-inline-item">
@@ -24,17 +30,19 @@
     <p class="card-text">
       <%= truncate(strip_tags(article.content), length: 300, separator: ' ') %>
     </p>
+  </div>
 
-    <% if !session[:is_authorized].nil? && article.user_id == session[:authorized_id]  %>
+  <% if is_authorized(article) %>
+      <div class="card-footer">
         <a href="#" class="card-link" data-toggle="modal" data-target="#dialog-share">
-          <%= t(:action_share) %>
+          <i class="icon-share mr-1"></i> <%= t(:action_share) %>
         </a>
         <a href="<%= edit_article_path(article) %>" class="card-link">
-          <%= t(:action_edit) %>
+          <i class="icon-note mr-1"></i> <%= t(:action_edit) %>
         </a>
         <a href="<%= article_path(article) %>" data-title="<%= article.title %>" class="card-link btn-delete-article">
-          <%= t(:action_delete) %>
+          <i class="icon-trash mr-1"></i> <%= t(:action_delete) %>
         </a>
-    <% end %>
-  </div>
+      </div>
+  <% end %>
 </div>

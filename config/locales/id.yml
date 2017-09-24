@@ -34,6 +34,7 @@ id:
   action_reply: "Balas"
   action_delete: "Hapus"
   action_edit: "Sunting"
+  action_view: "Lihat"
 
   sort_latest: "Terakhir Terbit"
   sort_popularity: "Paling Populer"

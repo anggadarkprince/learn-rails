@@ -1,20 +1,33 @@
 <div class="jumbotron">
   <div class="container">
     <div class="d-block d-sm-flex text-center text-sm-left">
-      <img class="mr-sm-3 mb-3" style="width: 90px; height: 90px;"
+      <img class="mr-sm-4 mb-3 mb-sm-0" style="width: 90px; height: 90px;"
            src="/images/avatars/<%= @author.avatar %>"
            data-holder-rendered="true">
-      <div class="p-md-1">
+      <div>
         <h3 class="mb-3 mb-md-1">
-          <span class="d-md-inline" hidden>Welcome back, </span>
-          <strong><%= @author.name %>!</strong>
+          <% if is_authorized(@author) %>
+              <span class="d-md-inline" hidden>Welcome back, </span>
+          <% end %>
+          <strong><%= @author.name %></strong>
         </h3>
+        <ul class="list-inline text-muted list-node mb-0">
+          <li class="list-inline-item">
+            Published <%= pluralize(@author.articles.count, 'article') %>
+          </li>
+          <li class="list-inline-item">
+            Joined since <%= @author.created_at.strftime('%B %d, %Y') %>
+          </li>
+        </ul>
         <p class="d-md-block" hidden>
           <%= @author.about.nil? ? 'No story available' : @author.about %>
         </p>
-        <% if !session[:is_authorized].nil? && @author.id == session[:authorized_id] %>
+        <% if is_authorized(@author) && params[:action] == 'index' %>
+            <a class="btn btn-primary" href="<%= settings_form_path %>" role="button">
+              <i class="icon-equalizer"></i>
+            </a>
             <a class="btn btn-primary" href="<%= new_article_path %>" role="button">
-              Create New Post
+              <i class="icon-note"></i> Create New Post
             </a>
         <% end %>
       </div>

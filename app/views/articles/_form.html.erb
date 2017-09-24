@@ -75,6 +75,11 @@
         </div>
       </div>
     </div>
+    <% unless @article.featured.blank? %>
+        <div class="form-group">
+          <img style="height: 180px; width: 100%; display: block; background: url('/images/features/<%= @article.featured %>') center center / cover">
+        </div>
+    <% end %>
     <div class="form-group">
       <%= form.label :content %>
       <%= form.text_area :content, class: "text-editor form-control#{@article.errors[:content].any? ? ' is-invalid' : ''}", placeholder: 'Article content', rows: 7 %>
