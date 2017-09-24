@@ -1,5 +1,9 @@
 module ApplicationHelper
 
+  def random_string
+    SecureRandom.urlsafe_base64
+  end
+
   def is_authorized(object = nil)
     if object.nil?
       !session[:is_authorized].nil? && !session[:authorized_id].nil?

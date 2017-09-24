@@ -29,6 +29,7 @@ id:
   label_published_on: "Diterbitkan pada"
   label_since: "Sejak"
   label_contributors_on_the_week: "Penulis minggu ini"
+  label_socials: "Sosial Media"
 
   action_share: "Bagikan"
   action_reply: "Balas"

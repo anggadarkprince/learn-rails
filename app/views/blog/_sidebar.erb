@@ -11,7 +11,7 @@
   <div class="col-md-6 col-lg-12">
     <div class="mb-5">
       <h4><%= t(:menu_categories) %></h4>
-      <ul class="list-unstyled">
+      <ul class="list-unstyled sidebar-list">
         <% @categoriesMenu.each do |category| %>
           <li>
             <a href="<%= url_for(controller: 'blog', action: 'category', slug: category.slug) %>">
@@ -25,7 +25,7 @@
   <div class="col-md-6 col-lg-12">
     <div class="mb-5">
       <h4><%= t(:label_archive) %></h4>
-      <ul class="list-unstyled">
+      <ul class="list-unstyled sidebar-list">
         <% @archivesMenu.each do |archive| %>
             <li>
               <a href="<%= url_for(controller: 'blog', action: 'archive', year: archive.year, month: archive.month) %>">

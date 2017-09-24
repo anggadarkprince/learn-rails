@@ -11,8 +11,21 @@ ul li {
   line-height: 1.8;
 }
 
+.sidebar-list li {
+  line-height: 2.2;
+}
+
 a:hover {
   text-decoration: none;
+}
+
+article {
+  line-height: 2;
+}
+
+.badge-tag {
+  font-weight: inherit;
+  padding: 0.5em 0.8em;
 }
 
 .arrow {
@@ -73,7 +86,7 @@ a:hover {
   border-bottom: none;
 }
 
-.card-footer{
+.card-footer {
   background-color: rgba(0, 0, 0, 0.02);
 }
 
@@ -95,4 +108,38 @@ a:hover {
 .note-icon-font.note-recent-color {
   background-color: transparent !important;
   color: inherit !important;
+}
+
+.panel-heading {
+  @extend .card-header;
+}
+
+.note-btn-group {
+  .btn-default {
+    @extend .btn-light;
+
+    &:after {
+      content: inherit;
+    }
+  }
+
+  .dropdown-menu {
+    > li {
+      > a {
+        display: block;
+        padding: 3px 20px;
+        clear: both;
+        font-weight: normal;
+        line-height: 1.42857143;
+        color: #333;
+        white-space: nowrap;
+      }
+    }
+  }
+}
+
+.note-popover .popover-content .note-color .dropdown-toggle,
+.note-editor .panel-heading.note-toolbar .note-color .dropdown-toggle {
+  width: 20px;
+  padding-left: 1px;
 }

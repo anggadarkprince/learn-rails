@@ -39,7 +39,7 @@ class User < ApplicationRecord
 
   validate :must_include_current_password, on: :update
   validates :new_password, allow_blank: true, length: { in: 6..20 }, confirmation: true
-  validates :new_password_confirmation, presence: true, if: :is_change_password?
+  validates :new_password_confirmation, presence: true, on: :update, if: :is_change_password?
   validates :about, length: { minimum: 10, maximum: 300 }, allow_blank: true, on: :update
 
   def is_change_password?

@@ -12,10 +12,12 @@ class AccountController < ApplicationController
       @user = User.find(session[:authorized_id])
 
       uploaded_io = params[:user][:avatar]
-      filename = uploaded_io.original_filename
-      File.open(Rails.root.join('public/images', 'avatars', filename), 'wb') do |file|
-        file.write(uploaded_io.read)
-        params[:user][:avatar] = filename
+      unless uploaded_io.nil?
+        filename = SecureRandom.urlsafe_base64 + File.extname(uploaded_io.original_filename)
+        File.open(Rails.root.join('public/images', 'avatars', filename), 'wb') do |file|
+          file.write(uploaded_io.read)
+          params[:user][:avatar] = filename
+        end
       end
 
       if @user.update(settings_params)

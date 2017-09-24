@@ -21,32 +21,32 @@
               <% end %>
               <div class="form-group">
                 <%= form.label :name %>
-                <%= form.text_field :name, class: "form-control#{@user.errors[:name].any? ? ' is-invalid' : ''}", placeholder: 'Enter your full name' %>
+                <%= form.text_field :name, class: "form-control#{@user.errors[:name].any? ? ' is-invalid' : ''}", placeholder: 'Enter your full name', required: true %>
                 <% if @user.errors[:name].any? %>
                     <span class="form-text invalid-feedback"><%= @user.errors[:name][0] %></span>
                 <% end %>
               </div>
               <div class="form-group">
                 <%= form.label :username %>
-                <%= form.text_field :username, class: "form-control#{@user.errors[:name].any? ? ' is-invalid' : ''}", placeholder: 'Enter unique username' %>
+                <%= form.text_field :username, class: "form-control#{@user.errors[:name].any? ? ' is-invalid' : ''}", placeholder: 'Enter unique username', required: true %>
                 <% if @user.errors[:username].any? %>
                     <span class="form-text invalid-feedback"><%= @user.errors[:username][0] %></span>
                 <% else %>
-                <span id="username-help" class="form-text text-muted">
+                <small id="username-help" class="form-text text-muted">
                   Must be unique, alpha numeric and dash only.
-                </span>
+                </small>
                 <% end %>
               </div>
               <div class="form-group">
                 <%= form.label :email, 'Email address' %>
-                <%= form.email_field :email, class: "form-control#{@user.errors[:email].any? ? ' is-invalid' : ''}", placeholder: 'Email address' %>
+                <%= form.email_field :email, class: "form-control#{@user.errors[:email].any? ? ' is-invalid' : ''}", placeholder: 'Email address', required: true %>
                 <% if @user.errors[:email].any? %>
                     <span class="form-text invalid-feedback"><%= @user.errors[:email][0] %></span>
                 <% end %>
               </div>
               <div class="form-group">
                 <%= form.label :password %>
-                <%= form.password_field :password, class: "form-control#{@user.errors[:password].any? ? ' is-invalid' : ''}", placeholder: 'Put secure password' %>
+                <%= form.password_field :password, class: "form-control#{@user.errors[:password].any? ? ' is-invalid' : ''}", placeholder: 'Put secure password', required: true %>
                 <% if @user.errors[:password].any? %>
                     <span class="form-text invalid-feedback"><%= @user.errors[:password][0] %></span>
                 <% end %>

@@ -43,6 +43,10 @@ $(document).on('turbolinks:load', function () {
         }
     });
 
+    // incompatibility issue with bootstrap 4
+    $('.note-btn').removeAttr('data-original-title');
+    $('.note-popover').css({'display': 'none'});
+
     function createSlug(str) {
         var $slug;
         var trimmed = $.trim(str);

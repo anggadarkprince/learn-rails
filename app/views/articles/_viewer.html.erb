@@ -28,13 +28,13 @@
     <%= article.views %>x <%= t(:label_views) %>
   </li>
 </ul>
-<div>
+<article>
   <%= raw article.content %>
-</div>
+</article>
 
 <div class="lead mb-5">
   <% article.tags.each do |tag| %>
-      <a href="/tag/<%= tag.slug %>" class="badge badge-pill badge-primary">
+      <a href="/tag/<%= tag.slug %>" class="badge badge-pill badge-tag badge-primary">
         #<%= tag.tag %>
       </a>
   <% end %>

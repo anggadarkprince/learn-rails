@@ -1,4 +1,8 @@
-<% content_for :title do %> - Homepage
+<% content_for :title do %> - <%= @article.title %>
+<% end %>
+
+<% content_for :head do %>
+    <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-584ce81653d5a038"></script>
 <% end %>
 
 <div class="container mt-5">
@@ -6,6 +10,9 @@
     <div class="col-lg-9">
       <div class="pr-xl-4">
         <%= render partial: 'articles/viewer', locals: {article: @article} %>
+
+        <h4 class="mb-4 mt-5"><%= t(:action_share) %></h4>
+        <div class="addthis_inline_share_toolbox"></div>
 
         <h4 class="mb-4 mt-5"><%= t(:label_author) %></h4>
         <%= render partial: 'author/author_card', locals: {author: @article.user} %>

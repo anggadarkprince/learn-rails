@@ -22,13 +22,19 @@
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item <%= params[:controller] == 'blog' && params[:action] == 'index' ? 'active' : '' %>">
-          <a class="nav-link" href="<%= root_url %>"><%= t(:menu_home) %></a>
+          <a class="nav-link" href="<%= root_url %>">
+            <%= t(:menu_home) %>
+          </a>
         </li>
         <li class="nav-item <%= params[:controller] == 'blog' && params[:action] == 'trending' ? 'active' : '' %>">
-          <a class="nav-link" href="<%= url_for(controller: 'blog', action: 'trending') %>"><%= t(:menu_trending) %></a>
+          <a class="nav-link" href="<%= url_for(controller: 'blog', action: 'trending') %>">
+            <%= t(:menu_trending) %>
+          </a>
         </li>
         <li class="nav-item <%= params[:controller] == 'author' && params[:action] == 'top' ? 'active' : '' %>">
-          <a class="nav-link" href="<%= url_for(controller: 'author', action: 'top') %>"><%= t(:menu_top_contributors) %></a>
+          <a class="nav-link" href="<%= url_for(controller: 'author', action: 'top') %>">
+            <%= t(:menu_top_contributors) %>
+          </a>
         </li>
         <li class="nav-item dropdown <%= params[:action] == 'category' ? 'active' : '' %>">
           <a class="nav-link dropdown-toggle" href="#" id="navbarBrowse" data-toggle="dropdown"
@@ -56,14 +62,14 @@
               <div class="dropdown-menu dropdown-menu-right">
                 <h6 class="dropdown-header">Main Menu</h6>
                 <a class="dropdown-item <%= params[:controller] == 'articles' ? 'active' : '' %>" href="<%= articles_path %>">
-                  <%= t(:menu_articles) %>
+                  <i class="icon-docs mr-2"></i> <%= t(:menu_articles) %>
                 </a>
                 <a class="dropdown-item <%= params[:controller] == 'account' ? 'active' : '' %>" href="<%= settings_path %>">
-                  <%= t(:menu_settings) %>
+                  <i class="icon-equalizer mr-2"></i> <%= t(:menu_settings) %>
                 </a>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="<%= logout_path %>">
-                  <%= t(:menu_sign_out) %>
+                  <i class="icon-logout mr-2"></i> <%= t(:menu_sign_out) %>
                 </a>
               </div>
             </li>
