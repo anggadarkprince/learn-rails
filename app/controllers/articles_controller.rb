@@ -9,7 +9,7 @@ class ArticlesController < ApplicationController
         article_data = article_data.order(created_at: :desc)
       end
       @articles = article_data.page params[:page]
-      @author = User.find(session.fetch(:authorized_id, '0'))
+      @author = @author
     end
   end
 
@@ -98,6 +98,27 @@ class ArticlesController < ApplicationController
       end
 
       redirect_to articles_path
+    end
+  end
+
+  def counter
+    @article = Article.find(params[:id])
+    @article.views = @article.views + 1
+    if @article.save
+      render json: {
+          status: 'success',
+          code: 200,
+          result: {
+              id: @article.id,
+              views: @article.views
+          }
+      }
+    else
+      render json: {
+          status: 'failed',
+          code: 500,
+          message: 'Internal server error'
+      }
     end
   end
 

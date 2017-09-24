@@ -3,6 +3,7 @@
 
 <% content_for :head do %>
     <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-584ce81653d5a038"></script>
+    <%= javascript_tag "window._token = '#{form_authenticity_token}'" %>
 <% end %>
 
 <div class="container mt-5">
@@ -30,3 +31,47 @@
     </div>
   </div>
 </div>
+
+<script>
+    $(document).on('turbolinks:load', function () {
+        var storageKey = 'blogstrap-viewer';
+        var viewHistory = [];
+        var localViewerData = localStorage.getItem(storageKey);
+        if (localViewerData != null) {
+            viewHistory = JSON.parse(localViewerData);
+        }
+
+        function checkViewHistory(article) {
+            var isIdExist = false;
+            for (var i = 0; i < viewHistory.length; i++) {
+                if (article == viewHistory[i]) {
+                    isIdExist = true;
+                    break;
+                }
+            }
+            return isIdExist;
+        }
+
+        if (!checkViewHistory(<%= @article.id %>)) {
+            setTimeout(function () {
+                $.ajax({
+                    url: '<%= count_article_url %>',
+                    method: 'post',
+                    dataType: 'json',
+                    data: {
+                        id: '<%= @article.id %>',
+                        authenticity_token: window._token
+                    },
+                    success: function (data) {
+                        viewHistory.push(data.result.id);
+                        localStorage.setItem(storageKey, JSON.stringify(viewHistory));
+                    },
+                    error: function (data) {
+                        console.log(data.message)
+                        debugger;
+                    }
+                })
+            }, 15000);
+        }
+    });
+</script>
