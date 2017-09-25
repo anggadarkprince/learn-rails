@@ -1,5 +1,5 @@
 <%
-  registeredCommenter = User.find(comment.user_id)
+  registeredCommenter = User.find_by_id(comment.user_id)
   if registeredCommenter.nil?
     avatar = 'noavatar.jpg'
   else
@@ -37,21 +37,23 @@
           <span class="arrow arrow-down"></span>
         </a>
       </li>
-      <li class="list-inline-item">
-        <%= link_to t(:action_reply), [comment.article, comment] %>
-      </li>
+      <% unless counter == 0 %>
+        <li class="list-inline-item">
+          <%= link_to t(:action_reply), '#', class: 'btn-reply' %>
+        </li>
+      <% end %>
       <% if !registeredCommenter.nil? && is_authorized(registeredCommenter) || params[:controller] == 'articles' %>
         <li class="list-inline-item">
           <%= link_to t(:action_delete), [comment.article, comment],
                       method: :delete,
-                      data: { confirm: 'Are you sure?' } %>
+                      data: { confirm: 'Are you sure want to delete this comment?' } %>
         </li>
       <% end %>
 
     </ul>
 
     <% if(comment.comments.count > 0) %>
-        <%= render comment.comments %>
+        <%= render comment.comments, counter: counter-1 %>
     <% end %>
   </div>
 </div>

@@ -1,7 +1,11 @@
 <ol class="breadcrumb pl-0 bg-transparent">
-  <li class="breadcrumb-item"><a href="/"><%= t(:menu_articles) %></a></li>
   <li class="breadcrumb-item">
-    <a href="/category/<%= article.category.slug %>">
+    <a href="<%= root_path %>">
+      <%= t(:menu_articles) %>
+    </a>
+  </li>
+  <li class="breadcrumb-item">
+    <a href="<%= blog_category_path slug: article.category.slug %>">
       <%= article.category.category %>
     </a>
   </li>
@@ -39,3 +43,92 @@
       </a>
   <% end %>
 </div>
+
+<script type="text/javascript" charset="utf-8">
+    $(document).ready(function () {
+        var viewerStorageKey = 'blogstrap-viewer';
+        var voterStorageKey = 'blogstrap-voter';
+
+        var localViewerData = localStorage.getItem(viewerStorageKey);
+        var localVoterData = localStorage.getItem(voterStorageKey);
+
+        var viewHistory = localViewerData == null ? [] : JSON.parse(localViewerData)
+        var voteHistory = localVoterData == null ? [] : JSON.parse(localVoterData)
+
+        function checkHistory(data, key) {
+            var isExist = false;
+            for (var i = 0; i < data.length; i++) {
+                if (key == data[i]) {
+                    isExist = true;
+                    break;
+                }
+            }
+            return isExist;
+        }
+
+        if (!checkHistory(viewHistory, <%= article.id %>)) {
+            setTimeout(function () {
+                $.ajax({
+                    url: '<%= count_article_url %>',
+                    method: 'post',
+                    dataType: 'json',
+                    data: {
+                        id: '<%= article.id %>',
+                        authenticity_token: window._token
+                    },
+                    success: function (data) {
+                        viewHistory.push(data.result.id);
+                        localStorage.setItem(viewerStorageKey, JSON.stringify(viewHistory));
+                    },
+                    error: function (data) {
+                        console.log(data.message);
+                        debugger;
+                    }
+                })
+            }, 15000);
+        }
+
+        $('.btn-vote').on('click', function (e) {
+            e.preventDefault();
+
+            var parent = $(this).closest('ul');
+            var commentId = parent.data('id');
+
+            if (!checkHistory(voteHistory, commentId)) {
+                parent.find('.btn-vote').addClass('disabled');
+
+                var counterTag = parent.find('.vote-counter');
+                var operatedWith = $(this).data('type') === 'up' ? 1 : -1;
+                var operationResult = parseInt(counterTag.text()) + operatedWith;
+                counterTag.html(operationResult).addClass(operationResult > 0 ? 'text-primary' : 'text-danger');
+
+                $.ajax({
+                    url: $(this).attr('href'),
+                    method: 'post',
+                    dataType: 'json',
+                    data: {
+                        id: commentId,
+                        authenticity_token: window._token
+                    },
+                    success: function (data) {
+                        voteHistory.push(data.result.id);
+                        localStorage.setItem(voterStorageKey, JSON.stringify(voteHistory));
+                    },
+                    error: function (data) {
+                        console.log(data.message);
+                        debugger;
+                    }
+                });
+            }
+        })
+
+        $('.comment-control').each(function () {
+            var commentId = $(this).data('id');
+            if (checkHistory(voteHistory, commentId)) {
+                $(this).find('.btn-vote').addClass('disabled');
+                var counterTag = $(this).find('.vote-counter');
+                counterTag.addClass(parseInt(counterTag.text()) > 0 ? 'text-primary' : 'text-danger')
+            }
+        });
+    });
+</script>

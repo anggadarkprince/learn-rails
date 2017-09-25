@@ -10,6 +10,15 @@
   <div class="row">
     <div class="col-lg-9">
       <div class="pr-xl-4">
+        <% if flash[:alert] %>
+            <div class="alert alert-<%= flash[:alert] %>" role="alert">
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+              <%= flash[:notice] %>
+            </div>
+        <% end %>
+
         <%= render partial: 'articles/viewer', locals: {article: @article} %>
 
         <h4 class="mb-4 mt-5"><%= t(:action_share) %></h4>
@@ -21,8 +30,8 @@
         <h4 class="mb-4 mt-5" id="comment"><%= t(:label_comments) %></h4>
         <%= render 'comments/form' %>
 
-        <div class="mb-5 mt-5">
-          <%= render @article.comments.where('comment_id IS NULL').order(created_at: :desc) %>
+        <div class="mb-5 mt-5 comment-list">
+          <%= render @article.comments.where('comment_id IS NULL').order(created_at: :desc), counter: 2 %>
         </div>
       </div>
     </div>
@@ -34,89 +43,12 @@
 
 <script>
     $(document).ready(function () {
-        var viewerStorageKey = 'blogstrap-viewer';
-        var voterStorageKey = 'blogstrap-voter';
-
-        var localViewerData = localStorage.getItem(viewerStorageKey);
-        var localVoterData = localStorage.getItem(voterStorageKey);
-
-        var viewHistory = localViewerData == null ? [] : JSON.parse(localViewerData)
-        var voteHistory = localVoterData == null ? [] : JSON.parse(localVoterData)
-
-        function checkHistory(data, key) {
-            var isExist = false;
-            for (var i = 0; i < data.length; i++) {
-                if (key == data[i]) {
-                    isExist = true;
-                    break;
-                }
-            }
-            return isExist;
-        }
-
-        if (!checkHistory(viewHistory, <%= @article.id %>)) {
-            setTimeout(function () {
-                $.ajax({
-                    url: '<%= count_article_url %>',
-                    method: 'post',
-                    dataType: 'json',
-                    data: {
-                        id: '<%= @article.id %>',
-                        authenticity_token: window._token
-                    },
-                    success: function (data) {
-                        viewHistory.push(data.result.id);
-                        localStorage.setItem(viewerStorageKey, JSON.stringify(viewHistory));
-                    },
-                    error: function (data) {
-                        console.log(data.message);
-                        debugger;
-                    }
-                })
-            }, 15000);
-        }
-
-        $('.btn-vote').on('click', function (e) {
+        var formCommentTemplate = $('#comment-form-wrapper').clone();
+        $('.btn-reply').on('click', function (e) {
             e.preventDefault();
-
-            var parent = $(this).closest('ul');
-            var commentId = parent.data('id');
-
-            if (!checkHistory(voteHistory, commentId)) {
-                parent.find('.btn-vote').addClass('disabled');
-
-                var counterTag = parent.find('.vote-counter');
-                var operatedWith = $(this).data('type') === 'up' ? 1 : -1;
-                var operationResult = parseInt(counterTag.text()) + operatedWith;
-                counterTag.html(operationResult).addClass(operationResult > 0 ? 'text-primary' : 'text-danger');
-
-                $.ajax({
-                    url: $(this).attr('href'),
-                    method: 'post',
-                    dataType: 'json',
-                    data: {
-                        id: commentId,
-                        authenticity_token: window._token
-                    },
-                    success: function (data) {
-                        voteHistory.push(data.result.id);
-                        localStorage.setItem(voterStorageKey, JSON.stringify(voteHistory));
-                    },
-                    error: function (data) {
-                        console.log(data.message);
-                        debugger;
-                    }
-                });
-            }
+            var commentParentId = $(this).closest('ul').data('id');
+            formCommentTemplate.find('input[name="comment[comment_id]"]').val(commentParentId);
+            $(this).closest('ul').after(formCommentTemplate);
         })
-
-        $('.comment-control').each(function () {
-            var commentId = $(this).data('id');
-            if (checkHistory(voteHistory, commentId)) {
-                $(this).find('.btn-vote').addClass('disabled');
-                var counterTag = $(this).find('.vote-counter');
-                counterTag.addClass(parseInt(counterTag.text()) > 0 ? 'text-primary' : 'text-danger')
-            }
-        });
     });
 </script>

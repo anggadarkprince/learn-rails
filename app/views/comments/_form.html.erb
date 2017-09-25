@@ -1,24 +1,40 @@
-<div class="row">
+<div class="row mb-4" id="comment-form-wrapper">
   <div class="<%= params[:controller] == 'articles' ? 'col-lg-12' : 'col-lg-8' %>">
 
-    <% if flash[:notice] %>
-        <div class="alert alert-primary" role="alert">
-          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-          <%= flash[:notice] %>
-        </div>
-    <% end %>
-
     <%= form_for([@article, @article.comments.build]) do |f| %>
-        <div class="form-group">
-          <%= f.label :name, t(:label_name) %>
-          <%= f.text_field :name, class: 'form-control', placeholder: 'Your full name' %>
-        </div>
-        <div class="form-group">
-          <%= f.label :email, t(:label_email) %>
-          <%= f.email_field :email, class: 'form-control', placeholder: 'Email address' %>
-        </div>
+        <input type="hidden" name="comment[comment_id]" value="">
+        <% if is_authorized() %>
+            <% author = User.find(session[:authorized_id]) %>
+            <div class="d-block d-sm-flex text-center text-sm-left mb-1">
+              <img class="mr-3 mb-1" style="width: 40px; height: 40px;"
+                   src="/images/avatars/<%= author.avatar %>"
+                   data-holder-rendered="true">
+              <div>
+                <h6 class="mb-1">
+                  <a href="<%= url_for(controller: 'author', action: 'profile', username: author.username) %>" role="button">
+                    <%= author.name %>
+                  </a>
+                </h6>
+                <ul class="list-inline list-node text-muted mb-1">
+                  <li class="list-inline-item">
+                    <%= author.email %>
+                  </li>
+                  <li class="list-inline-item">
+                    Total <%= t(:menu_articles) %> <%= author.articles.count %>
+                  </li>
+                </ul>
+              </div>
+            </div>
+        <% else %>
+            <div class="form-group">
+              <%= f.label :name, t(:label_name) %>
+              <%= f.text_field :name, class: 'form-control', placeholder: 'Your full name' %>
+            </div>
+            <div class="form-group">
+              <%= f.label :email, t(:label_email) %>
+              <%= f.email_field :email, class: 'form-control', placeholder: 'Email address' %>
+            </div>
+        <% end %>
         <div class="form-group">
           <%= f.label :comment, t(:label_comments) %>
           <%= f.text_area :comment, class: 'form-control', placeholder: 'Comment put here' %>

@@ -42,7 +42,7 @@
       <%= render 'comments/form' %>
 
       <div class="mb-5 mt-5">
-        <%= render @article.comments.where('comment_id IS NULL').order(created_at: :desc) %>
+        <%= render @article.comments.where('comment_id IS NULL').order(created_at: :desc), counter: 2 %>
       </div>
 
     </div>

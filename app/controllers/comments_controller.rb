@@ -1,17 +1,36 @@
 class CommentsController < ApplicationController
-  http_basic_authenticate_with name: 'angga', password: 'secret', only: :destroy
 
   def create
     @article = Article.find(params[:article_id])
-    @comment = @article.comments.create(comment_params)
-    redirect_to blog_show_path(slug: @article.slug) + '#comment', alert: 'success', notice: 'Your comment was successfully submitted.'
+    params = comment_params
+    if is_authorized
+      author = User.find(session.fetch(:authorized_id, '0'))
+      params[:name] = author.name
+      params[:email] = author.email
+      params[:user_id] = author.id
+    end
+
+    if @article.comments.create(params)
+      flash[:alert] = 'success'
+      flash[:notice] = 'Your comment was successfully submitted.'
+    else
+      flash[:alert] = 'danger'
+      flash[:notice] = 'Comment failed to submit, please try again.'
+    end
+    redirect_back(fallback_location: root_path, anchor: '#comment')
   end
 
   def destroy
     @article = Article.find(params[:article_id])
     @comment = @article.comments.find(params[:id])
-    @comment.destroy
-    redirect_to article_path(@article)
+    if @comment.destroy
+      flash[:alert] = 'success'
+      flash[:notice] = 'The comment was successfully deleted.'
+    else
+      flash[:alert] = 'danger'
+      flash[:notice] = 'Comment failed to delete, please try again.'
+    end
+    redirect_back(fallback_location: root_path)
   end
 
   def vote
@@ -41,6 +60,6 @@ class CommentsController < ApplicationController
 
   private
   def comment_params
-    params.require(:comment).permit(:name, :email, :comment, :type)
+    params.require(:comment).permit(:name, :email, :comment, :comment_id, :type)
   end
 end
