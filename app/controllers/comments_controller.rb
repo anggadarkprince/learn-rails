@@ -24,7 +24,7 @@ class CommentsController < ApplicationController
     @article = Article.find(params[:article_id])
     @comment = @article.comments.find(params[:id])
     if @comment.destroy
-      flash[:alert] = 'success'
+      flash[:alert] = 'warning'
       flash[:notice] = 'The comment was successfully deleted.'
     else
       flash[:alert] = 'danger'

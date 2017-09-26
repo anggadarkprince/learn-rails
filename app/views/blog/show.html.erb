@@ -40,15 +40,3 @@
     </div>
   </div>
 </div>
-
-<script>
-    $(document).ready(function () {
-        var formCommentTemplate = $('#comment-form-wrapper').clone();
-        $('.btn-reply').on('click', function (e) {
-            e.preventDefault();
-            var commentParentId = $(this).closest('ul').data('id');
-            formCommentTemplate.find('input[name="comment[comment_id]"]').val(commentParentId);
-            $(this).closest('ul').after(formCommentTemplate);
-        })
-    });
-</script>

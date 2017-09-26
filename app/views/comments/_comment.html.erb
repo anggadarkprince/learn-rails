@@ -44,9 +44,7 @@
       <% end %>
       <% if !registeredCommenter.nil? && is_authorized(registeredCommenter) || params[:controller] == 'articles' %>
         <li class="list-inline-item">
-          <%= link_to t(:action_delete), [comment.article, comment],
-                      method: :delete,
-                      data: { confirm: 'Are you sure want to delete this comment?' } %>
+          <%= link_to t(:action_delete), [comment.article, comment], class: 'btn-delete-comment' %>
         </li>
       <% end %>
 
