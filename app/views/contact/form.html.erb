@@ -11,15 +11,15 @@
       </ol>
 
       <h3>Contact Us</h3>
-      <% if flash[:notice] %>
-          <div class="alert alert-primary" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-            <%= flash[:notice] %>
-          </div>
-      <% end %>
-      <%= form_for :contact, url: 'contact/create' do |form| %>
+
+      <div class="alert alert-<%= flash[:alert] %>" role="alert" hidden>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <span class="message"><%= flash[:notice] %></span>
+      </div>
+
+      <%= form_for :contact, url: 'contact/create', remote: true do |form| %>
           <div class="row">
             <div class="col col-sm-6">
               <div class="form-group">

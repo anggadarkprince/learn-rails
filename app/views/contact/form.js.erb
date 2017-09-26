@@ -1,0 +1,8 @@
+$('.alert').attr('class', 'alert')
+    .addClass("alert-<%= alert %>")
+    .removeAttr('hidden')
+    .find('.message').html('<%= notice %>');
+
+<% if alert == 'success' %>
+$('form')[0].reset();
+<% end %>
