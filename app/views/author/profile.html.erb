@@ -16,6 +16,7 @@
       </div>
 
       <% if @articles.count == 0 %>
+          <p>No articles available</p>
           <% content_for :footer_fixed do %> fixed-bottom
           <% end %>
       <% end %>

@@ -21,7 +21,7 @@
   </li>
   <li class="list-inline-item">
     <%= t(:label_posted_by) %>
-    <a href="/author/<%= article.user.username %>">
+    <a href="<%= profile_path username: article.user.username %>">
       <%= article.user.name %>
     </a>
   </li>
@@ -38,7 +38,7 @@
 
 <div class="lead mb-5">
   <% article.tags.each do |tag| %>
-      <a href="/tag/<%= tag.slug %>" class="badge badge-pill badge-tag badge-primary">
+      <a href="<%= blog_tag_path slug: tag.slug %>" class="badge badge-pill badge-tag badge-primary">
         #<%= tag.tag %>
       </a>
   <% end %>

@@ -1,5 +1,5 @@
-<div class="jumbotron">
-  <div class="container">
+<div class="jumbotron banner-overlay"<%= yield(:banner_image) %>>
+  <div class="container banner-content">
     <%= content_for?(:banner_content) ? yield(:banner_content) : yield %>
   </div>
 </div>

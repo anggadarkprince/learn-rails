@@ -104,6 +104,25 @@ article {
   }
 }
 
+.banner-content {
+  color: #ffffff;
+  position: relative;
+}
+
+.banner-overlay {
+  position: relative;
+
+  &:before {
+    content: "";
+    position: absolute;
+    background: rgba(0, 0, 0, 0.5);
+    width: 100%;
+    top: 0;
+    left: 0;
+    bottom: 0;
+  }
+}
+
 .modal-header {
   border-bottom: none;
 }

@@ -17,6 +17,10 @@
                    data-holder-rendered="true">
             </a>
         <% end %>
+
+        <% if (@onTheWeekAuthors.empty?) %>
+            <p>No author available</p>
+        <% end %>
       </div>
 
       <div class="mb-4 mt-2">

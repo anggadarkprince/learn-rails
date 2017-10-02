@@ -1,6 +1,9 @@
 <% content_for :title do %> - <%= @category.category %>
 <% end %>
 
+<% content_for :banner_image do %> style="background: url(/images/categories/<%= @category.featured %>) center center / cover"
+<% end %>
+
 <% content_for :banner_content do %>
     <h1 class="display-5">Category: <%= @category.category %></h1>
     <p class="mb-0">

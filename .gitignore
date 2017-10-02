@@ -26,6 +26,10 @@ config/application.yml
 !/public/images/avatars/noavatar.jpg
 /public/images/features/*
 !/public/images/features/.keep
+/public/images/categories/*
+!/public/images/categories/.keep
+/public/images/*
+!/public/images/.keep
 
 .byebug_history
 .idea
