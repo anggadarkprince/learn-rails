@@ -30,7 +30,7 @@
           <% end %>
       <% end %>
 
-      <%= render partial: 'articles/article_card', collection: @articles, as: :article %>
+      <%= render partial: 'articles/article_card', collection: @articles, as: :article, cached: true %>
 
       <%= paginate @articles %>
 

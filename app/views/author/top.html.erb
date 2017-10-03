@@ -11,11 +11,13 @@
 
       <div class="mb-5">
         <% @onTheWeekAuthors.each do |author| %>
-            <a title="<%= author.name %>" href="<%= url_for(controller: 'author', action: 'profile', username: author.username) %>">
-              <img alt="<%= author.name %>" class="mr-3 mb-3" style="width: 70px; height: 70px;"
-                   src="/images/avatars/<%= author.avatar %>"
-                   data-holder-rendered="true">
-            </a>
+            <% cache author do %>
+              <a title="<%= author.name %>" href="<%= url_for(controller: 'author', action: 'profile', username: author.username) %>">
+                <img alt="<%= author.name %>" class="mr-3 mb-3" style="width: 70px; height: 70px;"
+                     src="/images/avatars/<%= author.avatar %>"
+                     data-holder-rendered="true">
+              </a>
+            <% end %>
         <% end %>
 
         <% if (@onTheWeekAuthors.empty?) %>
@@ -27,7 +29,7 @@
         <h4><%= t(:menu_top_contributors) %></h4>
       </div>
 
-      <%= render partial: 'author', collection: @authors %>
+      <%= render partial: 'author', collection: @authors, cached: true %>
 
     </div>
   </div>
